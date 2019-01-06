@@ -1,0 +1,9 @@
+{
+  "name": "mecha-muse",
+  "version": "0.0.1",
+  "description": "Musical idea generator",
+  "main": "index.js",
+  "repository": "https://github.com/rjsalvadorr/mecha-muse",
+  "author": "rjsalvadorr",
+  "license": "MIT"
+}
