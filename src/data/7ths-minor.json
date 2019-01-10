@@ -1,0 +1,35 @@
+{
+  "patternType": "SEVENTH",
+  "diagrams": [
+    {
+      "chordQuality": "m7",
+      "inversion": "root",
+      "markers": [
+        "3rd,3,1",
+        "7th,4,1",
+        "5th,5,3",
+        "root,6,1"
+      ]
+    },
+    {
+      "chordQuality": "m7",
+      "inversion": "root",
+      "markers": [
+        "3rd,2,2",
+        "7th,3,1",
+        "5th,4,3",
+        "root,5,1"
+      ]
+    },
+    {
+      "chordQuality": "m7",
+      "inversion": "root",
+      "markers": [
+        "3rd,1,2",
+        "7th,2,2",
+        "5th,3,3",
+        "root,4,1"
+      ]
+    }
+  ]
+}

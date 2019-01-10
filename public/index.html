@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+
+  <title>guitarragrams</title>
+  <meta name="description" content="guitarragrams = guitar chord diagrams">
+  <meta name="author" content="RJ Salvador">
+
+  <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600|Libre+Baskerville:400,700" rel="stylesheet" type="text/css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/guitarragrams.css">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126977033-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-126977033-2');
+  </script>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but guitarragrams doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function setLilypondMode() {
+      document.body.classList.add("body--lilypond");
+    }
+
+    function resetMode() {
+      document.body.classList.remove("body--lilypond");
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+{
+  "patternType": "FOUR_STRING",
+  "diagrams": [
+    {
+      "chordQuality": "dim",
+      "inversion": "root",
+      "markers": [
+        "3rd,3,1",
+        "5th,5,2",
+        "root,6,1"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "1st",
+      "markers": [
+        "5th,3,2",
+        "root,4,1",
+        "3rd,6,2"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "2nd",
+      "markers": [
+        "root,3,4",
+        "3rd,5,5",
+        "5th,6,1"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "root",
+      "markers": [
+        "3rd,2,2",
+        "5th,4,2",
+        "root,5,1"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "1st",
+      "markers": [
+        "5th,2,3",
+        "root,3,1",
+        "3rd,5,2"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "2nd",
+      "markers": [
+        "root,2,5",
+        "3rd,4,5",
+        "5th,5,1"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "root",
+      "markers": [
+        "3rd,1,2",
+        "5th,3,2",
+        "root,4,1"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "1st",
+      "markers": [
+        "5th,1,2",
+        "root,2,1",
+        "3rd,4,1"
+      ]
+    },
+    {
+      "chordQuality": "dim",
+      "inversion": "2nd",
+      "markers": [
+        "root,1,5",
+        "3rd,3,5",
+        "5th,4,1"
+      ]
+    }
+  ]
+}

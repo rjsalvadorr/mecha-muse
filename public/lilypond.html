@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+
+  <title>guitarragrams</title>
+  <meta name="description" content="guitarragrams = guitar chord diagrams">
+  <meta name="author" content="RJ Salvador">
+
+  <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+
+  <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/guitarragrams.css">
+</head>
+
+<body class="body--lilypond quick-brown-fox ">
+  <noscript>
+    <strong>We're sorry but guitarragrams doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+        <button class="btn-generate-diagrams button-primary">Generate diagram images</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/dom-to-image.min.js"></script>
+  <script>
+    function createDiagramImages() {
+      var nodes = document.querySelectorAll('.pattern-group');
+
+      nodes.forEach(function(node) {
+        domtoimage.toPng(node).then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            document.body.appendChild(img);
+        }).catch(function (error) {
+            console.error('oops, something went wrong!', error);
+        });
+      });
+    }
+
+    document.querySelector('.btn-generate-diagrams').onclick=function(){ createDiagramImages() };
+  </script>
+</body>
+
+</html>
