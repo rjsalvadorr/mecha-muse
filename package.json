@@ -16,7 +16,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@vue/eslint-config-airbnb": "^4.0.0",
     "lodash": "^4.17.11",
     "tonal": "^2.1.2",
     "vue": "^2.5.17",
@@ -24,6 +23,7 @@
     "vue-material-slider": "^1.0.1"
   },
   "devDependencies": {
+    "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/cli-plugin-babel": "^3.0.3",
     "@vue/cli-plugin-eslint": "^3.0.3",
     "@vue/cli-service": "^3.0.3",
