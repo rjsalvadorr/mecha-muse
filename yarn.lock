@@ -3338,6 +3338,10 @@ gzip-size@^5.0.0:
     duplexer "^0.1.1"
     pify "^3.0.0"
 
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+
 handle-thing@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.0.tgz#0e039695ff50c93fc288557d696f3c1dc6776754"
@@ -6681,6 +6685,84 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
+tonal-array@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-array/-/tonal-array-2.1.2.tgz#50db7e09b94de4c59f4be414ac6d83d3612c0873"
+  dependencies:
+    tonal-note "^2.1.2"
+
+tonal-chord@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-chord/-/tonal-chord-2.1.2.tgz#331fcb9e6b995fcd7b76dd1f46a8b82a578d0f48"
+  dependencies:
+    tonal-dictionary "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+
+tonal-dictionary@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-dictionary/-/tonal-dictionary-2.1.2.tgz#4a72eb3d561a331580ad3019eb42dc0b6610b3db"
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+
+tonal-distance@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-distance/-/tonal-distance-2.1.2.tgz#a53b21d61a588ec31cf081e6acd06b0ac2d317e1"
+  dependencies:
+    tonal-interval "^2.1.2"
+    tonal-note "^2.1.2"
+
+tonal-interval@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-interval/-/tonal-interval-2.1.2.tgz#620ef64e302ef193bd2a9368142c2132c0b8ed16"
+
+tonal-key@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-key/-/tonal-key-2.1.2.tgz#51f7c0c931c0d6be26e7ade9f3954fa2161778ec"
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-note "^2.1.2"
+
+tonal-note@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-note/-/tonal-note-2.1.2.tgz#8fdddb775168e918931a74a256e7810c730ebcac"
+
+tonal-pcset@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-pcset/-/tonal-pcset-2.1.2.tgz#c6b33b3016b08bcdc36dd7772208ecaecc47b449"
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-interval "^2.1.2"
+    tonal-note "^2.1.2"
+
+tonal-scale@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal-scale/-/tonal-scale-2.1.2.tgz#b352e34c63187543753447cd32aaa57df2c711a6"
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-dictionary "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+
+tonal@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tonal/-/tonal-2.1.2.tgz#7168ec683d40dd36004527f9e9a632fabab1f23a"
+  dependencies:
+    tonal-array "^2.1.2"
+    tonal-chord "^2.1.2"
+    tonal-dictionary "^2.1.2"
+    tonal-distance "^2.1.2"
+    tonal-interval "^2.1.2"
+    tonal-key "^2.1.2"
+    tonal-note "^2.1.2"
+    tonal-pcset "^2.1.2"
+    tonal-scale "^2.1.2"
+
 topo@3.x.x:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/topo/-/topo-3.0.3.tgz#d5a67fb2e69307ebeeb08402ec2a2a6f5f7ad95c"
@@ -6965,6 +7047,17 @@ vue-loader@^15.4.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-material-slider@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-material-slider/-/vue-material-slider-1.0.1.tgz#144851ece031a419840fef17ecbbaac2af0eafe3"
+  dependencies:
+    hammerjs "^2.0.8"
+    vue "^2.5.17"
+
+vue-material@^1.0.0-beta-10.2:
+  version "1.0.0-beta-10.2"
+  resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-10.2.tgz#c3effea97e0c5a0c696b0051d5ef9c6e6cf2a5ed"
 
 vue-style-loader@^4.1.0:
   version "4.1.2"
