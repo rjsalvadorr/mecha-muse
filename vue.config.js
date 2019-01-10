@@ -10,12 +10,6 @@ module.exports = {
       filename: 'index.html',
       // chunks: ["index"]
     },
-    lilypond: {
-      entry: 'src/main.js',
-      template: 'public/lilypond.html',
-      filename: 'lilypond.html',
-      // chunks: ["lilypond"]
-    },
   },
   chainWebpack: (config) => {
     config.optimization.delete('splitChunks');
