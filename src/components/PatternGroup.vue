@@ -15,23 +15,23 @@
 </template>
 
 <script>
-import FretboardDiagram from "./FretboardDiagram.vue";
+import FretboardDiagram from './FretboardDiagram.vue';
 
 export default {
-  name: "PatternGroup",
+  name: 'PatternGroup',
   props: {
     label: String,
     diagrams: Array,
-    customId: String
+    customId: String,
   },
   computed: {
-    showGroup: function() {
+    showGroup() {
       return this.diagrams.length > 0;
-    }
+    },
   },
   components: {
-    FretboardDiagram
-  }
+    FretboardDiagram,
+  },
 };
 </script>
 

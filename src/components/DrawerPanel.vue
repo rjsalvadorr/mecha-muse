@@ -54,10 +54,10 @@
 
 <script>
 export default {
-  name: "DrawerPanel",
+  name: 'DrawerPanel',
   props: {
-    customId: String
-  }
+    customId: String,
+  },
 };
 </script>
 

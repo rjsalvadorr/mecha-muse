@@ -5,25 +5,25 @@
 
 <script>
 export default {
-  name: "FretboardMarker",
+  name: 'FretboardMarker',
   props: {
     stringNum: Number,
     fretNum: Number,
-    markerData: Array
+    markerData: Array,
   },
   computed: {
-    markerClassname: function() {
-      for (var i = 0; i < this.markerData.length; i++) {
+    markerClassname() {
+      for (let i = 0; i < this.markerData.length; i++) {
         if (
-          this.markerData[i].string == this.stringNum &&
-          this.markerData[i].fret == this.fretNum
+          this.markerData[i].string === this.stringNum
+          && this.markerData[i].fret === this.fretNum
         ) {
-          return "active marker--" + this.markerData[i].degree;
+          return `active marker--${this.markerData[i].degree}`;
         }
       }
-      return "";
-    }
-  }
+      return '';
+    },
+  },
 };
 </script>
 

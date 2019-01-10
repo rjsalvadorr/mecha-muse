@@ -6,8 +6,8 @@
   "version": "0.1.0",
   "private": true,
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/rjsalvadorr/mecha-muse.git"
+    "type": "git",
+    "url": "https://github.com/rjsalvadorr/mecha-muse.git"
   },
   "scripts": {
     "serve": "vue-cli-service lint && vue-cli-service serve",
@@ -16,6 +16,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vue/eslint-config-airbnb": "^4.0.0",
     "vue": "^2.5.17",
     "vue-burger-menu": "^1.0.7"
   },

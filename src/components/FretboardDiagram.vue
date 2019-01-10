@@ -14,31 +14,31 @@
 </template>
 
 <script>
-import FretboardMarker from "./FretboardMarker.vue";
-import { chordLabels } from "../utils/constants";
+import FretboardMarker from './FretboardMarker.vue';
+import { chordLabels } from '../utils/constants';
 
 export default {
-  name: "FretboardDiagram",
+  name: 'FretboardDiagram',
   props: {
     instrument: String,
-    diagramData: Object
+    diagramData: Object,
   },
   computed: {
-    strings: function() {
+    strings() {
       // Default to guitar for now.
       return 6;
     },
-    fretSize: function() {
+    fretSize() {
       const markers = this.markers;
       let highestFretNum = 0;
-      for (var i = 0; i < markers.length; i++) {
+      for (let i = 0; i < markers.length; i++) {
         if (markers[i].fret > highestFretNum) {
           highestFretNum = markers[i].fret;
         }
       }
       return highestFretNum;
     },
-    frets: function() {
+    frets() {
       const defaultFretNum = 4;
       const highestFretNum = this.fretSize;
       let returnFretNum = defaultFretNum;
@@ -51,9 +51,9 @@ export default {
 
       return returnFretNum;
     },
-    processedMarkers: function() {
-      return this.markers.map(function(oldMarker) {
-        let processedFret = "";
+    processedMarkers() {
+      return this.markers.map(function (oldMarker) {
+        let processedFret = '';
 
         if (this.fretSize <= 3) {
           processedFret = oldMarker.fret + 1;
@@ -64,34 +64,33 @@ export default {
         return {
           degree: oldMarker.degree,
           string: oldMarker.string,
-          fret: processedFret
+          fret: processedFret,
         };
       }, this);
     },
-    markers: function() {
-      return this.diagramData.markers.map(function(rawString) {
-        const exploded = rawString.split(",");
+    markers() {
+      return this.diagramData.markers.map((rawString) => {
+        const exploded = rawString.split(',');
         return {
           degree: exploded[0],
           string: Number(exploded[1]),
-          fret: Number(exploded[2])
+          fret: Number(exploded[2]),
         };
       });
     },
-    inversion: function() {
-      if (this.diagramData.inversion === "root") {
-        return "Root Position";
-      } else {
-        return `${this.diagramData.inversion} Inversion`;
+    inversion() {
+      if (this.diagramData.inversion === 'root') {
+        return 'Root Position';
       }
+      return `${this.diagramData.inversion} Inversion`;
     },
-    diagramLabel: function() {
+    diagramLabel() {
       return chordLabels[this.diagramData.chordQuality];
-    }
+    },
   },
   components: {
-    FretboardMarker
-  }
+    FretboardMarker,
+  },
 };
 </script>
 

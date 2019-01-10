@@ -101,37 +101,37 @@
 </template>
 
 <script>
-import { Slide } from "vue-burger-menu";
+import { Slide } from 'vue-burger-menu';
 
-import * as constants from "./utils/constants";
-import * as utils from "./utils/utils";
+import * as constants from './utils/constants';
+import * as utils from './utils/utils';
 
-import fiveStringMaj from "./data/five-string-major.json";
-import fiveStringMin from "./data/five-string-minor.json";
-import fiveStringDim from "./data/five-string-diminished.json";
-import threeStringMaj from "./data/three-string-major.json";
-import threeStringMin from "./data/three-string-minor.json";
-import threeStringDim from "./data/three-string-diminished.json";
-import fourStringMaj from "./data/four-string-major.json";
-import fourStringMin from "./data/four-string-minor.json";
-import fourStringDim from "./data/four-string-diminished.json";
-import seventhsMaj from "./data/7ths-major.json";
-import seventhsMin from "./data/7ths-minor.json";
-import seventhsDim from "./data/7ths-diminished.json";
+import fiveStringMaj from './data/five-string-major.json';
+import fiveStringMin from './data/five-string-minor.json';
+import fiveStringDim from './data/five-string-diminished.json';
+import threeStringMaj from './data/three-string-major.json';
+import threeStringMin from './data/three-string-minor.json';
+import threeStringDim from './data/three-string-diminished.json';
+import fourStringMaj from './data/four-string-major.json';
+import fourStringMin from './data/four-string-minor.json';
+import fourStringDim from './data/four-string-diminished.json';
+import seventhsMaj from './data/7ths-major.json';
+import seventhsMin from './data/7ths-minor.json';
+import seventhsDim from './data/7ths-diminished.json';
 
-import PatternGroup from "./components/PatternGroup.vue";
-import FretboardMarker from "./components/FretboardMarker.vue";
-import DrawerPanel from "./components/DrawerPanel.vue";
+import PatternGroup from './components/PatternGroup.vue';
+import FretboardMarker from './components/FretboardMarker.vue';
+import DrawerPanel from './components/DrawerPanel.vue';
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     Slide,
     PatternGroup,
     FretboardMarker,
-    DrawerPanel
+    DrawerPanel,
   },
-  data: function() {
+  data() {
     return {
       inputDiagrams: [
         fiveStringMaj,
@@ -145,26 +145,26 @@ export default {
         fourStringDim,
         seventhsMaj,
         seventhsMin,
-        seventhsDim
+        seventhsDim,
       ],
-      selectedChordType: "maj,maj7,7,min,m7,dim,m7b5,dim7",
+      selectedChordType: 'maj,maj7,7,min,m7,dim,m7b5,dim7',
       selectedMaxFretSpan: 6,
-      selectedMaxStringSpan: 6
+      selectedMaxStringSpan: 6,
     };
   },
   computed: {
-    diagrams: function() {
+    diagrams() {
       let ctr = 0;
       const outputDiagrams = {};
-      for (var i = 0; i < this.inputDiagrams.length; i++) {
-        let diagramGroup = this.inputDiagrams[i];
-        let patternType = diagramGroup.patternType;
+      for (let i = 0; i < this.inputDiagrams.length; i++) {
+        const diagramGroup = this.inputDiagrams[i];
+        const patternType = diagramGroup.patternType;
 
         outputDiagrams[patternType] = outputDiagrams[patternType] || [];
-        for (var j = 0; j < diagramGroup.diagrams.length; j++) {
-          let currentDiagram = utils.buildDiagram(
+        for (let j = 0; j < diagramGroup.diagrams.length; j++) {
+          const currentDiagram = utils.buildDiagram(
             diagramGroup.diagrams[j],
-            ctr
+            ctr,
           );
           outputDiagrams[patternType].push(currentDiagram);
           ctr++;
@@ -172,36 +172,36 @@ export default {
       }
       return outputDiagrams;
     },
-    filteredDiagrams: function() {
+    filteredDiagrams() {
       return {
         FIVE_STRING: utils.filterDiagrams(
           this.diagrams.FIVE_STRING,
-          this.options
+          this.options,
         ),
         THREE_STRING: utils.filterDiagrams(
           this.diagrams.THREE_STRING,
-          this.options
+          this.options,
         ),
         FOUR_STRING: utils.filterDiagrams(
           this.diagrams.FOUR_STRING,
-          this.options
+          this.options,
         ),
-        SEVENTH: utils.filterDiagrams(this.diagrams.SEVENTH, this.options)
+        SEVENTH: utils.filterDiagrams(this.diagrams.SEVENTH, this.options),
       };
     },
-    diagramLabels: function() {
+    diagramLabels() {
       return constants.groupLabels;
     },
-    options: function() {
+    options() {
       return {
         chordTypes: this.selectedChordType,
         fretSpanMin: 0,
         fretSpanMax: this.selectedMaxFretSpan,
         stringSpanMin: 0,
-        stringSpanMax: this.selectedMaxStringSpan
+        stringSpanMax: this.selectedMaxStringSpan,
       };
     },
-    numDiagrams: function() {
+    numDiagrams() {
       let totalDiagrams = 0;
       totalDiagrams += this.filteredDiagrams.FIVE_STRING.length;
       totalDiagrams += this.filteredDiagrams.THREE_STRING.length;
@@ -209,18 +209,18 @@ export default {
       totalDiagrams += this.filteredDiagrams.SEVENTH.length;
 
       return totalDiagrams;
-    }
+    },
   },
   methods: {
-    handleOpenMenu: function() {
-      document.querySelector(".bm-menu").classList.add("bm-menu--open");
-      document.querySelector(".bm-menu").classList.remove("bm-menu--closed");
+    handleOpenMenu() {
+      document.querySelector('.bm-menu').classList.add('bm-menu--open');
+      document.querySelector('.bm-menu').classList.remove('bm-menu--closed');
     },
-    handleCloseMenu: function() {
-      document.querySelector(".bm-menu").classList.add("bm-menu--closed");
-      document.querySelector(".bm-menu").classList.remove("bm-menu--open");
-    }
-  }
+    handleCloseMenu() {
+      document.querySelector('.bm-menu').classList.add('bm-menu--closed');
+      document.querySelector('.bm-menu').classList.remove('bm-menu--open');
+    },
+  },
 };
 </script>
 
