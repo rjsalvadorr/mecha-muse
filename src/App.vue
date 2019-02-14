@@ -9,14 +9,20 @@
           If you like this kind of nerdy music stuff, I have more things <a href="http://www.rj-salvador.com/tags/music/" target="_blank">here</a>.
         </p>
       </div>
+      <DebugPanel enabled />
     </div>
   </div>
 </template>
 
 
 <script>
+import DebugPanel from './components/DebugPanel.vue';
+
 export default {
   name: 'app',
+  components: {
+    DebugPanel,
+  },
 };
 </script>
 
