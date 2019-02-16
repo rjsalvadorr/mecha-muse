@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app">
+  <div id="app" class="app container">
     <div class="row">
       <div class="twelve columns app__intro">
         <h1 class="app__title">Mecha-Muse</h1>
@@ -9,8 +9,8 @@
           If you like this kind of nerdy music stuff, I have more things <a href="http://www.rj-salvador.com/tags/music/" target="_blank">here</a>.
         </p>
       </div>
-      <DebugPanel enabled />
     </div>
+    <DebugPanel enabled />
   </div>
 </template>
 
