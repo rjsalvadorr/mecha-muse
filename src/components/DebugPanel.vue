@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "DebugPanel",
+  name: 'DebugPanel',
   props: {
     enabled: Boolean,
   },

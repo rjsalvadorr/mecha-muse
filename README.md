@@ -1,5 +1,7 @@
 # mecha-muse
 
+...
+
 ## Project setup
 ```
 yarn install

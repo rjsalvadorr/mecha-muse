@@ -13,7 +13,8 @@
     "serve": "vue-cli-service lint && vue-cli-service serve",
     "build": "vue-cli-service lint && vue-cli-service build",
     "start": "npm run serve",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build-docs": "jsdoc src -r -d docs -R ./README.md"
   },
   "dependencies": {
     "lodash": "^4.17.11",
@@ -23,11 +24,12 @@
     "vue-material-slider": "^1.0.1"
   },
   "devDependencies": {
-    "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/cli-plugin-babel": "^3.0.3",
     "@vue/cli-plugin-eslint": "^3.0.3",
     "@vue/cli-service": "^3.0.3",
+    "@vue/eslint-config-airbnb": "^4.0.0",
     "@vue/eslint-config-prettier": "^3.0.3",
+    "jsdoc": "^3.5.5",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
