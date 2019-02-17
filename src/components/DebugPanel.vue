@@ -16,7 +16,7 @@
 
 <script>
 import Button from './Button.vue';
-import MidiPlayer from './utils/midiPlayer.js';
+import MidiPlayer from '../utils/midiPlayer';
 
 export default {
   name: 'DebugPanel',

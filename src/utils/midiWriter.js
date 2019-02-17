@@ -1,5 +1,5 @@
 import GMidiWriter from 'midi-writer-js';
-import tonalNote from 'tonal-note';
+import { Note as tonalNote} from 'tonal';
 import AcConstants from './constants';
 
 const INSTRUMENT_DATA = AcConstants.instrumentData;
@@ -43,11 +43,12 @@ class MidiWriter {
 
     for (let i = 0; i < arrChordNotes.length; i++) {
       midiNumbers = [];
-      notes = arrChordNotes[i].split(' ');
+      const notes = arrChordNotes[i].split(' ');
 
-      notes.map((note) => {
+      for(let j = 0; j < notes.length; j++) {
+        const note = notes[j];
         midiNumbers.push(tonalNote.midi(note));
-      });
+      }
 
       returnTrack.addEvent(this._buildMidi(midiNumbers, AcConstants.DEFAULT_NOTE_DURATION));
     }
@@ -89,4 +90,4 @@ class MidiWriter {
   }
 }
 
-module.exports = new MidiWriter();
+export default new MidiWriter();

@@ -1,12 +1,14 @@
 // Plays MIDI files on the browser!
 
-import GMidiPlayer from 'midi-player-js';
-import tonalNote from 'tonal-note';
-
+import midiPlayer from 'midi-player-js';
+import { Note } from 'tonal';
+import * as Soundfont from 'soundfont-player';
 import AcMidiWriter from './midiWriter';
 import AcConstants from './constants';
 
 const INSTRUMENT_DATA = AcConstants.instrumentData;
+const GMidiPlayer = midiPlayer || {};
+const tonalNote = Note || {};
 
 /**
 * Submodule responsible for playing audio on the browser.
@@ -35,7 +37,8 @@ class MidiPlayer {
     let instrNotes;
 
     const instrumentRoles = Object.keys(INSTRUMENT_DATA);
-    for (const instrumentRole of instrumentRoles) {
+    for (let i = 0; i < instrumentRoles.length; i++) {
+      const instrumentRole = instrumentRoles[i];
       // initialize each instrument
       if (typeof INSTRUMENT_DATA[instrumentRole] !== 'function') {
         instrNotes = [];
@@ -51,7 +54,7 @@ class MidiPlayer {
         sfOptions = {
           soundfont: 'FluidR3_GM',
           // TODO - find a way to limit the notes. This approach doesn't work for some reason...
-          // notes: instrNotes
+        // notes: instrNotes
         };
 
         Soundfont.instrument(this.audioContext, INSTRUMENT_DATA[instrumentRole].name, sfOptions).then((sfInstrument) => {
@@ -183,4 +186,4 @@ class MidiPlayer {
   }
 }
 
-module.exports = new MidiPlayer();
+export default new MidiPlayer();

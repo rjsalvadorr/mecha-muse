@@ -46,8 +46,11 @@ const AcConstants = {
       gain: 1.65,
       midiInstrumentCode: 32,
     },
+    // TO-DO: test this function properly
     getByName(instrName) {
-      for (const instrumentRole in this) {
+      const instrumentRoles = Object.keys(this);
+      for (let i = 0; i < instrumentRoles.length; i++) {
+        const instrumentRole = instrumentRoles[i];
         if (instrName === this[instrumentRole].name) {
           return this[instrumentRole];
         }
@@ -69,4 +72,4 @@ AcConstants.instrumentData.accompaniment.upperLimit = AcConstants.ACCOMPANIMENT_
 AcConstants.instrumentData.bass.lowerLimit = AcConstants.BASS_LOWER_LIMIT;
 AcConstants.instrumentData.bass.upperLimit = AcConstants.BASS_UPPER_LIMIT;
 
-module.exports = AcConstants;
+export default AcConstants;
