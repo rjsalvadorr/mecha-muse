@@ -1,7 +1,7 @@
 /**
  * Utility functions for numerical/math calculations
  */
-class CalculationUtils {
+class CalcUtils {
   /**
    * Returns a random integer between the two given numbers
    * @param {number} minimum - minimum number (inclusive)
@@ -47,4 +47,4 @@ class CalculationUtils {
   };
 }
 
-export default CalculationUtils;
+export default CalcUtils;
