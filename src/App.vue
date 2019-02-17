@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app container">
+  <div id="app" class="app container" @keyup.esc="toggleDebugPanel">
     <div class="row">
       <div class="twelve columns app__intro">
         <h1 class="app__title">Mecha-Muse</h1>
@@ -10,7 +10,7 @@
         </p>
       </div>
     </div>
-    <DebugPanel enabled />
+    <DebugPanel :enabled="debugPanelEnabled" />
   </div>
 </template>
 
@@ -22,6 +22,16 @@ export default {
   name: 'app',
   components: {
     DebugPanel,
+  },
+  data() {  
+    return {
+      debugPanelEnabled: false,
+    };
+  },
+  methods: {
+    toggleDebugPanel() {
+      this.debugPanelEnabled = !this.debugPanelEnabled;
+    },
   },
 };
 </script>

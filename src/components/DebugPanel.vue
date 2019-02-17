@@ -6,8 +6,7 @@
         <div class="six columns">
           <Button label="Test MIDI playback (solo)" :clickHandler="handleMidiPlayerTestSolo" /><br>
           <Button label="Test MIDI playback (solo + accopmaniment)" :clickHandler="handleMidiPlayerTestGroup" /><br>
-          <Button label="Test rhythm generation" :clickHandler="handleStubTest" /><br>
-          <Button label="Test note generation" :clickHandler="handleStubTest" />
+          <Button label="Stop MIDI playback" :clickHandler="handleMidiPlayerStop" /><br>
         </div>
       </div>
     </div>
@@ -27,14 +26,6 @@ export default {
     Button,
   },
   methods: {
-    handleStubTest(event) {
-      let msg = `STUB TEST FROM:\n${this.$vnode.tag}`;
-      if (event) {
-        msg += `\n\nEVENT:\n${JSON.stringify(event, null, 2)}`;
-      }
-      // eslint-disable-next-line
-      window.alert(msg);
-    },
     handleMidiPlayerTestSolo(evt) {
       const testMelody = ['Bb4', 'B4', 'C5', 'D5'];
       MidiPlayer.playMelodySolo(testMelody);
@@ -43,7 +34,7 @@ export default {
       if (evt) {
         msg += `\n\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
       }
-      msg += `\nMELODY:\n${testMelody}`;
+      msg += `\nMELODY:\n${JSON.stringify(testMelody, null, 2)}`;
       // eslint-disable-next-line
       console.debug(msg);
     },
@@ -59,7 +50,17 @@ export default {
       if (evt) {
         msg += `\n\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
       }
-      msg += `\nMELODIES:\n${testMelodies}`;
+      msg += `\nMELODIES:\n${JSON.stringify(testMelodies, null, 2)}`;
+      // eslint-disable-next-line
+      console.debug(msg);
+    },
+    handleMidiPlayerStop(evt) {
+      MidiPlayer.stopPlayback();
+
+      let msg = `STUB TEST FROM:\n${this.$vnode.tag}`;
+      if (evt) {
+        msg += `\n\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
+      }
       // eslint-disable-next-line
       console.debug(msg);
     },
@@ -70,7 +71,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .debug-panel {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
   position: fixed;
   top: 0;
