@@ -2,8 +2,7 @@
  * Utility functions for numerical/math calculations
  */
 class CalcUtils {
-
-    /**
+  /**
      * Returns a random integer between the two given numbers
      * @static
      * @param {number} minimum - minimum number (inclusive)
@@ -17,7 +16,7 @@ class CalcUtils {
     // The maximum is exclusive and the minimum is inclusive
   }
 
-    /**
+  /**
      * Finds the distance between two pitches, given in semitones
      * @static
      * @param {string} pitch1 - first pitch
@@ -30,7 +29,7 @@ class CalcUtils {
     return placeholder ? 0 : 0;
   }
 
-    /**
+  /**
      * Splits an integer into several random parts
      * @static
      * @param {number} numToSplit - integer to split

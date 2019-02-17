@@ -5,3 +5,5 @@ class mmChord {
     this.thing2 = thing2;
   }
 }
+
+export default mmChord;

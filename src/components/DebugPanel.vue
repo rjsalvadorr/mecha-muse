@@ -4,9 +4,10 @@
       <h1 class="debug-panel--heading">Debug/test panel</h1>
       <div class="row">
         <div class="six columns">
-          <Button label="Test MIDI playback" :clickHandler="handlerStubTest" /><br>
-          <Button label="Test rhythm generation" :clickHandler="handlerStubTest" /><br>
-          <Button label="Test note generation" :clickHandler="handlerStubTest" />
+          <Button label="Test MIDI playback (solo)" :clickHandler="handleMidiPlayerTestSolo" /><br>
+          <Button label="Test MIDI playback (solo + accopmaniment)" :clickHandler="handleMidiPlayerTestGroup" /><br>
+          <Button label="Test rhythm generation" :clickHandler="handleStubTest" /><br>
+          <Button label="Test note generation" :clickHandler="handleStubTest" />
         </div>
       </div>
     </div>
@@ -15,6 +16,7 @@
 
 <script>
 import Button from './Button.vue';
+import MidiPlayer from './utils/midiPlayer.js';
 
 export default {
   name: 'DebugPanel',
@@ -25,13 +27,41 @@ export default {
     Button,
   },
   methods: {
-    handlerStubTest(event) {
+    handleStubTest(event) {
       let msg = `STUB TEST FROM:\n${this.$vnode.tag}`;
       if (event) {
         msg += `\n\nEVENT:\n${JSON.stringify(event, null, 2)}`;
       }
       // eslint-disable-next-line
       window.alert(msg);
+    },
+    handleMidiPlayerTestSolo(evt) {
+      const testMelody = ['Bb4', 'B4', 'C5', 'D5'];
+      MidiPlayer.playMelodySolo(testMelody);
+
+      let msg = `STUB TEST FROM:\n${this.$vnode.tag}`;
+      if (evt) {
+        msg += `\n\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
+      }
+      msg += `\nMELODY:\n${testMelody}`;
+      // eslint-disable-next-line
+      console.debug(msg);
+    },
+    handleMidiPlayerTestGroup(evt) {
+      const testMelody = ['Bb4', 'B4', 'C5', 'D5'];
+      const testMelodies = [];
+      testMelodies.push(testMelody);
+      testMelodies.push(['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2']);
+      testMelodies.push(['G1', 'E1', 'C2', 'D2']);
+
+      MidiPlayer.playMelodyWithAccompaniment(testMelodies[0], testMelodies[1], testMelodies[2]);
+      let msg = `STUB TEST FROM:\n${this.$vnode.tag}`;
+      if (evt) {
+        msg += `\n\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
+      }
+      msg += `\nMELODIES:\n${testMelodies}`;
+      // eslint-disable-next-line
+      console.debug(msg);
     },
   },
 };

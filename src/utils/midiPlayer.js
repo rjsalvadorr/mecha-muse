@@ -1,11 +1,11 @@
 // Plays MIDI files on the browser!
 
-const GMidiPlayer = require('midi-player-js');
-const SoundfontPlayer = require('soundfont-player');
-const tonalNote = require('tonal-note');
+import GMidiPlayer from 'midi-player-js';
+import tonalNote from 'tonal-note';
 
-const AcMidiWriter = require('./midi-writer');
-const AcConstants = require('./constants');
+import AcMidiWriter from './midiWriter';
+import AcConstants from './constants';
+
 const INSTRUMENT_DATA = AcConstants.instrumentData;
 
 /**
@@ -27,17 +27,22 @@ class MidiPlayer {
     this.playbackLocked = true;
 
     // is this kind of scope hackery necessary?!
-    var haxThis = this;
-    var currentInstrument, sfOptions, numLowerLimit = 0, numUpperLimit = 0, instrNotes;
+    const haxThis = this;
+    let currentInstrument;
+    let sfOptions;
+    let numLowerLimit = 0;
+    let numUpperLimit = 0;
+    let instrNotes;
 
-    for (var instrumentRole in INSTRUMENT_DATA) {
+    const instrumentRoles = Object.keys(INSTRUMENT_DATA);
+    for (const instrumentRole of instrumentRoles) {
       // initialize each instrument
-      if(typeof INSTRUMENT_DATA[instrumentRole] !== "function") {
+      if (typeof INSTRUMENT_DATA[instrumentRole] !== 'function') {
         instrNotes = [];
         numLowerLimit = tonalNote.midi(INSTRUMENT_DATA[instrumentRole].lowerLimit);
         numUpperLimit = tonalNote.midi(INSTRUMENT_DATA[instrumentRole].upperLimit);
 
-        for(var midiCode = numLowerLimit; midiCode <= numUpperLimit; midiCode++) {
+        for (let midiCode = numLowerLimit; midiCode <= numUpperLimit; midiCode++) {
           // Specifies available notes for playback on this instrument.
           // There's no sense loading notes that this instrument would never play!
           instrNotes.push(midiCode);
@@ -49,53 +54,52 @@ class MidiPlayer {
           // notes: instrNotes
         };
 
-        Soundfont.instrument(this.audioContext, INSTRUMENT_DATA[instrumentRole].name, sfOptions).then(function (sfInstrument) {
+        Soundfont.instrument(this.audioContext, INSTRUMENT_DATA[instrumentRole].name, sfOptions).then((sfInstrument) => {
           currentInstrument = INSTRUMENT_DATA.getByName(sfInstrument.name);
 
           haxThis.instruments[currentInstrument.role] = sfInstrument;
 
           haxThis.numInstrumentsInit++;
 
-          console.info("Instrument loaded!");
+          console.info('Instrument loaded!');
 
-          if(haxThis.numInstrumentsInit === AcConstants.DEFAULT_NUM_INSTRUMENTS) {
+          if (haxThis.numInstrumentsInit === AcConstants.DEFAULT_NUM_INSTRUMENTS) {
             haxThis._finishLoad();
           }
         });
       }
     }
-
   }
 
-    /**
+  /**
     * Triggers the note playing for all instruments. Called for every MIDI event in the app.
     * @private
     * @param {number} event - MIDI event
     */
   _midiCallback(event) {
     // callback for MIDI events
-    var instr1 = this.instruments["melody"];
-    var instr2 = this.instruments["accompaniment"];
-    var instr3 = this.instruments["bass"];
+    const instr1 = this.instruments.melody;
+    const instr2 = this.instruments.accompaniment;
+    const instr3 = this.instruments.bass;
 
-    if (!this.playbackLocked && event.name == 'Note on' && event.velocity > 0) {
-        switch(event.track) {
-          case 1:
-            instr1.play(event.noteName, this.audioContext.currentTime, {gain: instr1.gain});
-            break;
-          case 2:
-            instr2.play(event.noteName, this.audioContext.currentTime, {gain: instr2.gain});
-            break;
-          case 3:
-            instr3.play(event.noteName, this.audioContext.currentTime, {gain: instr3.gain});
-            break;
-          default:
+    if (!this.playbackLocked && event.name === 'Note on' && event.velocity > 0) {
+      switch (event.track) {
+        case 1:
+          instr1.play(event.noteName, this.audioContext.currentTime, { gain: instr1.gain });
+          break;
+        case 2:
+          instr2.play(event.noteName, this.audioContext.currentTime, { gain: instr2.gain });
+          break;
+        case 3:
+          instr3.play(event.noteName, this.audioContext.currentTime, { gain: instr3.gain });
+          break;
+        default:
             // nothing!
-        }
+      }
     }
 
-    if (event.name == 'Note off') {
-      switch(event.track) {
+    if (event.name === 'Note off') {
+      switch (event.track) {
         case 1:
           instr1.stop();
           break;
@@ -110,54 +114,55 @@ class MidiPlayer {
       }
     }
 
-    if (event.name == "End of Track") {
+    if (event.name === 'End of Track') {
       this.playbackLocked = true;
     }
   }
 
-    /**
+  /**
     * Completes the loading of this class. The "midiPlayerReady" eve
     * @private
     * @emits {statusUpdate} - Emits this event when the audio player successfully loads
     */
   _finishLoad() {
-    var haxThis = this;
-    this.player = new GMidiPlayer.Player(function(event) {
+    const haxThis = this;
+    this.player = new GMidiPlayer.Player(((event) => {
       haxThis._midiCallback(event);
-    });
+    }));
     this.initialized = true;
     this.playbackLocked = false;
 
-    var updateEvent = new CustomEvent('statusUpdate', {detail: "MIDI player is loaded!"});
+    const updateEvent = new CustomEvent('statusUpdate', { detail: 'MIDI player is loaded!' });
     document.body.dispatchEvent(updateEvent);
   }
 
-    /**
+  /**
     * Plays the given melody.
     * @param {string[]} melodySolo - solo melody (violin)
     */
   playMelodySolo(melodySolo) {
-    var strMidi = AcMidiWriter.buildMelodyMidi(melodySolo);
+    const strMidi = AcMidiWriter.buildMelodyMidi(melodySolo);
     this._playMelody(strMidi);
   }
-    /**
+
+  /**
     * Plays the given melodies.
     * @param {string[]} melodySolo - solo melody (violin)
     * @param {string[]} melodyAccomp - accompaniment melody (piano)
     * @param {string[]} melodyBass - bass melody (bass)
     */
   playMelodyWithAccompaniment(melodySolo, melodyAccomp, melodyBass) {
-    var strMidi = AcMidiWriter.buildMelodyMidiWithAccompaniment(melodySolo, melodyAccomp, melodyBass);
+    const strMidi = AcMidiWriter.buildMelodyMidiWithAccompaniment(melodySolo, melodyAccomp, melodyBass);
     this._playMelody(strMidi);
   }
 
-    /**
+  /**
     * Actually plays the given melody
     * @private
     * @param {string} strMidi - MIDI data, as a DataURI string.
     */
   _playMelody(strMidi) {
-    if(this.initialized) {
+    if (this.initialized) {
       this.stopPlayback();
       this.playbackLocked = false;
       this.player.loadDataUri(strMidi);
@@ -167,13 +172,13 @@ class MidiPlayer {
     }
   }
 
-    /**
+  /**
     * Stops all playback
     */
   stopPlayback() {
-    this.instruments["melody"].stop();
-    this.instruments["accompaniment"].stop();
-    this.instruments["bass"].stop();
+    this.instruments.melody.stop();
+    this.instruments.accompaniment.stop();
+    this.instruments.bass.stop();
     this.player.stop();
   }
 }

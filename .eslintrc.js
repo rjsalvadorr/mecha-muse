@@ -1,3 +1,10 @@
+const customRules = {
+  'no-underscore-dangle': 'off',
+  'array-callback-return': 'off',
+  'no-loop-func': 'off',
+  'class-methods-use-this': 'off',
+};
+
 module.exports = {
   root: true,
   env: {
@@ -13,6 +20,7 @@ module.exports = {
     'max-len': 'off',
     'no-plusplus': 'off',
     'prefer-destructuring': 'off',
+    ...customRules,
   },
   parserOptions: {
     parser: 'babel-eslint',

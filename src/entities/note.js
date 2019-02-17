@@ -5,3 +5,5 @@ class mmNote {
     this.thing2 = thing2;
   }
 }
+
+export default mmNote;
