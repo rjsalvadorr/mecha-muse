@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: midiPlayer.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: midiPlayer.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Plays MIDI files on the browser!
+
+const GMidiPlayer = require('midi-player-js');
+const SoundfontPlayer = require('soundfont-player');
+const tonalNote = require('tonal-note');
+
+const AcMidiWriter = require('./midi-writer');
+const AcConstants = require('./constants');
+const INSTRUMENT_DATA = AcConstants.instrumentData;
+
+/**
+* Submodule responsible for playing audio on the browser.
+* @emits {statusUpdate} - Emits this event when the audio player loads.
+*/
+class MidiPlayer {
+  constructor() {
+    this.instruments = {};
+    this.numInstrumentsInit = 0;
+
+    this.player = null;
+    this.audioContext = new AudioContext();
+
+    this.initialized = false;
+    // Added this flag to fix an issue where notes randomly play again after the track ends.
+    // It only works for tracks that are all the same length. If we ever have to play tracks that have
+    // different lengths, we'll need a different solution.
+    this.playbackLocked = true;
+
+    // is this kind of scope hackery necessary?!
+    var haxThis = this;
+    var currentInstrument, sfOptions, numLowerLimit = 0, numUpperLimit = 0, instrNotes;
+
+    for (var instrumentRole in INSTRUMENT_DATA) {
+      // initialize each instrument
+      if(typeof INSTRUMENT_DATA[instrumentRole] !== "function") {
+        instrNotes = [];
+        numLowerLimit = tonalNote.midi(INSTRUMENT_DATA[instrumentRole].lowerLimit);
+        numUpperLimit = tonalNote.midi(INSTRUMENT_DATA[instrumentRole].upperLimit);
+
+        for(var midiCode = numLowerLimit; midiCode &lt;= numUpperLimit; midiCode++) {
+          // Specifies available notes for playback on this instrument.
+          // There's no sense loading notes that this instrument would never play!
+          instrNotes.push(midiCode);
+        }
+
+        sfOptions = {
+          soundfont: 'FluidR3_GM',
+          // TODO - find a way to limit the notes. This approach doesn't work for some reason...
+          // notes: instrNotes
+        };
+
+        Soundfont.instrument(this.audioContext, INSTRUMENT_DATA[instrumentRole].name, sfOptions).then(function (sfInstrument) {
+          currentInstrument = INSTRUMENT_DATA.getByName(sfInstrument.name);
+
+          haxThis.instruments[currentInstrument.role] = sfInstrument;
+
+          haxThis.numInstrumentsInit++;
+
+          console.info("Instrument loaded!");
+
+          if(haxThis.numInstrumentsInit === AcConstants.DEFAULT_NUM_INSTRUMENTS) {
+            haxThis._finishLoad();
+          }
+        });
+      }
+    }
+
+  }
+
+    /**
+    * Triggers the note playing for all instruments. Called for every MIDI event in the app.
+    * @private
+    * @param {number} event - MIDI event
+    */
+  _midiCallback(event) {
+    // callback for MIDI events
+    var instr1 = this.instruments["melody"];
+    var instr2 = this.instruments["accompaniment"];
+    var instr3 = this.instruments["bass"];
+
+    if (!this.playbackLocked &amp;&amp; event.name == 'Note on' &amp;&amp; event.velocity > 0) {
+        switch(event.track) {
+          case 1:
+            instr1.play(event.noteName, this.audioContext.currentTime, {gain: instr1.gain});
+            break;
+          case 2:
+            instr2.play(event.noteName, this.audioContext.currentTime, {gain: instr2.gain});
+            break;
+          case 3:
+            instr3.play(event.noteName, this.audioContext.currentTime, {gain: instr3.gain});
+            break;
+          default:
+            // nothing!
+        }
+    }
+
+    if (event.name == 'Note off') {
+      switch(event.track) {
+        case 1:
+          instr1.stop();
+          break;
+        case 2:
+          instr2.stop();
+          break;
+        case 3:
+          instr3.stop();
+          break;
+        default:
+          // nothing!
+      }
+    }
+
+    if (event.name == "End of Track") {
+      this.playbackLocked = true;
+    }
+  }
+
+    /**
+    * Completes the loading of this class. The "midiPlayerReady" eve
+    * @private
+    * @emits {statusUpdate} - Emits this event when the audio player successfully loads
+    */
+  _finishLoad() {
+    var haxThis = this;
+    this.player = new GMidiPlayer.Player(function(event) {
+      haxThis._midiCallback(event);
+    });
+    this.initialized = true;
+    this.playbackLocked = false;
+
+    var updateEvent = new CustomEvent('statusUpdate', {detail: "MIDI player is loaded!"});
+    document.body.dispatchEvent(updateEvent);
+  }
+
+    /**
+    * Plays the given melody.
+    * @param {string[]} melodySolo - solo melody (violin)
+    */
+  playMelodySolo(melodySolo) {
+    var strMidi = AcMidiWriter.buildMelodyMidi(melodySolo);
+    this._playMelody(strMidi);
+  }
+    /**
+    * Plays the given melodies.
+    * @param {string[]} melodySolo - solo melody (violin)
+    * @param {string[]} melodyAccomp - accompaniment melody (piano)
+    * @param {string[]} melodyBass - bass melody (bass)
+    */
+  playMelodyWithAccompaniment(melodySolo, melodyAccomp, melodyBass) {
+    var strMidi = AcMidiWriter.buildMelodyMidiWithAccompaniment(melodySolo, melodyAccomp, melodyBass);
+    this._playMelody(strMidi);
+  }
+
+    /**
+    * Actually plays the given melody
+    * @private
+    * @param {string} strMidi - MIDI data, as a DataURI string.
+    */
+  _playMelody(strMidi) {
+    if(this.initialized) {
+      this.stopPlayback();
+      this.playbackLocked = false;
+      this.player.loadDataUri(strMidi);
+      this.player.play();
+    } else {
+      console.warn("[AutoComposerMidi._playMelody()] Player isn't initialized yet...");
+    }
+  }
+
+    /**
+    * Stops all playback
+    */
+  stopPlayback() {
+    this.instruments["melody"].stop();
+    this.instruments["accompaniment"].stop();
+    this.instruments["bass"].stop();
+    this.player.stop();
+  }
+}
+
+module.exports = new MidiPlayer();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiWriter.html">MidiWriter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Feb 17 2019 09:19:10 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

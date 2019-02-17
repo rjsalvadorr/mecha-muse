@@ -98,79 +98,309 @@
 
         
             
-<h4 class="name" id="getPitchDistance"><span class="type-signature">(constant) </span>getPitchDistance<span class="type-signature"></span></h4>
+<h4 class="name" id="AcConstants"><span class="type-signature"></span>AcConstants<span class="type-signature"> :Object</span></h4>
 
 
 
 
 <div class="description">
-    Finds the distance between two pitches, given in semitones
+    Constants used by the application.
 </div>
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
 
 
 
 
-<dl class="details">
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
+    <h5 class="subsection-title">Properties:</h5>
 
     
 
-    
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="calculations.js.html">calculations.js</a>, <a href="calculations.js.html#line14">line 14</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<h4 class="name" id="splitInteger"><span class="type-signature">(constant) </span>splitInteger<span class="type-signature"></span></h4>
+                <td class="name"><code>DEFAULT_NOTE_DURATION</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
 
 
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Note duration for simple melodies</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>DEFAULT_NUM_INSTRUMENTS</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
 
 
-<div class="description">
-    Splits an integer into several random parts
-</div>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Default number of instruments</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>DEFAULT_LOWER_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
 
 
+            
+            </td>
 
+            
+
+            
+
+            <td class="description last">Lower limit of main melody's range (pitch in scientific notation)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>DEFAULT_UPPER_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Upper limit of main melody's range (pitch in scientific notation)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ACCOMPANIMENT_LOWER_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Lower limit of accompaniment range (pitch in scientific notation)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ACCOMPANIMENT_UPPER_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Upper limit of accompaniment range (pitch in scientific notation)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>BASS_LOWER_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Lower limit of bassline's range (pitch in scientific notation)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>BASS_UPPER_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Upper limit of bassline's range (pitch in scientific notation)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NUM_GENERATIONS_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Limit on number of melody generation attempts (unused)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>NUM_MELODIES_LIMIT</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Limit on number of returned melodies</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>instrumentData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Data for the default instruments used by the app.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -204,7 +434,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="calculations.js.html">calculations.js</a>, <a href="calculations.js.html#line28">line 28</a>
+        <a href="constants.js.html">constants.js</a>, <a href="constants.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -238,13 +468,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#getPitchDistance">getPitchDistance</a></li><li><a href="global.html#splitInteger">splitInteger</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiWriter.html">MidiWriter</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Feb 16 2019 12:09:51 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Feb 17 2019 09:19:10 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
