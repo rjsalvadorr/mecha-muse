@@ -56,7 +56,7 @@ class MidiPlayer {
 
           haxThis.numInstrumentsInit++;
 
-          console.log("Instrument loaded!");
+          console.info("Instrument loaded!");
 
           if(haxThis.numInstrumentsInit === AcConstants.DEFAULT_NUM_INSTRUMENTS) {
             haxThis._finishLoad();
