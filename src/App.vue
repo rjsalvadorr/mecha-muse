@@ -1,13 +1,21 @@
 <template>
   <div id="app" class="app container" @keyup.esc="toggleDebugPanel">
     <div class="row">
-      <div class="twelve columns app__intro">
-        <h1 class="app__title">Mecha-Muse</h1>
-        <p class="app__description">
-          A musical idea generator, built and updated by <a href="http://rj-salvador.com" target="_blank">RJ Salvador</a>.
-          Source code can be seen at <a href="https://github.com/rjsalvadorr/mecha-muse" target="_blank">GitHub</a>.
-          If you like this kind of nerdy music stuff, I have more things <a href="http://www.rj-salvador.com/tags/music/" target="_blank">here</a>.
-        </p>
+      <div class="six columns">
+        <div class="app__intro">
+          <h1 class="app__title">Mecha-Muse</h1>
+          <p class="app__description">
+            A musical idea generator, built and updated by <a href="http://rj-salvador.com" target="_blank">RJ Salvador</a>.
+            Source code can be seen at <a href="https://github.com/rjsalvadorr/mecha-muse" target="_blank">GitHub</a>.
+            If you like this kind of nerdy music stuff, I have more things <a href="http://www.rj-salvador.com/tags/music/" target="_blank">here</a>.
+          </p>
+        </div>
+        <PlaylistDisplay />
+      </div>
+      <div class="six columns">
+        <NotationDisplay />
+        <PlaybackControls />
+        <GenerationControls />
       </div>
     </div>
     <DebugPanel :enabled="debugPanelEnabled" />
@@ -17,13 +25,21 @@
 
 <script>
 import DebugPanel from './components/DebugPanel.vue';
+import GenerationControls from './components/GenerationControls.vue';
+import NotationDisplay from './components/NotationDisplay.vue';
+import PlaybackControls from './components/PlaybackControls.vue';
+import PlaylistDisplay from './components/PlaylistDisplay.vue';
 
 export default {
   name: 'app',
   components: {
     DebugPanel,
+    GenerationControls,
+    NotationDisplay,
+    PlaybackControls,
+    PlaylistDisplay,
   },
-  data() {  
+  data() {
     return {
       debugPanelEnabled: false,
     };
@@ -52,13 +68,4 @@ $main-color: #2c3e50;
     text-align: center;
   }
 }
-
-/* Larger than mobile */
-@media (min-width: 750px) {
-  .app__description {
-    width: 50%;
-    margin: 0 auto;
-  }
-}
-
 </style>
