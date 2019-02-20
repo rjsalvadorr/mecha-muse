@@ -1,15 +1,17 @@
 <template>
   <div id="app" class="app container" @keyup.esc="toggleDebugPanel">
     <div class="row">
+      <div class="app__intro">
+        <h1 class="app__title">Mecha-Muse</h1>
+        <p class="app__description">
+          A musical idea generator, built and updated by <a href="http://rj-salvador.com" target="_blank">RJ Salvador</a>.
+          Source code can be seen at <a href="https://github.com/rjsalvadorr/mecha-muse" target="_blank">GitHub</a>.
+          If you like this kind of nerdy music stuff, I have more things <a href="http://www.rj-salvador.com/tags/music/" target="_blank">here</a>.
+        </p>
+      </div>
+    </div>
+    <div class="row">
       <div class="six columns">
-        <div class="app__intro">
-          <h1 class="app__title">Mecha-Muse</h1>
-          <p class="app__description">
-            A musical idea generator, built and updated by <a href="http://rj-salvador.com" target="_blank">RJ Salvador</a>.
-            Source code can be seen at <a href="https://github.com/rjsalvadorr/mecha-muse" target="_blank">GitHub</a>.
-            If you like this kind of nerdy music stuff, I have more things <a href="http://www.rj-salvador.com/tags/music/" target="_blank">here</a>.
-          </p>
-        </div>
         <PlaylistDisplay />
       </div>
       <div class="six columns">
@@ -39,7 +41,7 @@ export default {
     PlaybackControls,
     PlaylistDisplay,
   },
-  data() {
+  data: function() {
     return {
       debugPanelEnabled: false,
     };
@@ -66,6 +68,7 @@ $main-color: #2c3e50;
 
   &__intro {
     text-align: center;
+    max-width: 600px;
   }
 }
 </style>
