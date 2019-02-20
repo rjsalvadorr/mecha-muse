@@ -18,5 +18,6 @@ export default {
 <style scoped lang="scss">
 .button {
   color: #fff;
+  padding: 0 10px;
 }
 </style>
