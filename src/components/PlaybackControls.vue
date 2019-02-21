@@ -29,7 +29,7 @@ export default {
   components: {
     Button,
   },
-  data: function() {
+  data() {
     return {
       volume: 80,
       tempo: 100,

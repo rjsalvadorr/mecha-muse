@@ -41,7 +41,7 @@ export default {
     PlaybackControls,
     PlaylistDisplay,
   },
-  data: function() {
+  data() {
     return {
       debugPanelEnabled: false,
     };
