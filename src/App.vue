@@ -57,12 +57,14 @@ export default {
   // event bus listeners
   mounted() {
     EventBus.$on('PLAY_MELODY_SOLO', () => {
-      if(this.selectedTrack.melody) {
+      if (this.selectedTrack.melody) {
         MidiPlayer.playMelodySolo(this.selectedTrack.melody);
       }
     });
-    EventBus.$on('CLICK_PLAY', () => {
-      if(this.selectedTrack.melody) {
+    EventBus.$on('CLICK_PLAY', (payload) => {
+      if (this.selectedTrack.melody) {
+        MidiPlayer.setTempo(payload.tempo);
+        MidiPlayer.setVolume(payload.volume);
         MidiPlayer.playMelodyWithAccompaniment(
           this.selectedTrack.melody,
           this.selectedTrack.accompaniment,

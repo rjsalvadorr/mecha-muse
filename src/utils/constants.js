@@ -31,19 +31,19 @@ const AcConstants = {
     melody: {
       role: 'melody',
       name: 'violin',
-      gain: 1.7,
+      gain: 1,
       midiInstrumentCode: 40,
     },
     accompaniment: {
       role: 'accompaniment',
       name: 'acoustic_guitar_steel',
-      gain: 1.6,
+      gain: 0.8,
       midiInstrumentCode: 25,
     },
     bass: {
       role: 'bass',
       name: 'acoustic_bass',
-      gain: 1.65,
+      gain: 0.9,
       midiInstrumentCode: 32,
     },
     // TO-DO: test this function properly

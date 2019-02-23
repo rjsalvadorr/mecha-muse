@@ -21,6 +21,8 @@ class MidiPlayer {
 
     this.player = null;
     this.audioContext = new AudioContext();
+    this.tempo = 120;
+    this.volume = 100;
 
     this.initialized = false;
     // Added this flag to fix an issue where notes randomly play again after the track ends.
@@ -57,8 +59,13 @@ class MidiPlayer {
         // notes: instrNotes
         };
 
-        Soundfont.instrument(this.audioContext, INSTRUMENT_DATA[instrumentRole].name, sfOptions).then((sfInstrument) => {
+        Soundfont.instrument(
+          this.audioContext,
+          INSTRUMENT_DATA[instrumentRole].name,
+          sfOptions,
+        ).then((sfInstrument) => {
           currentInstrument = INSTRUMENT_DATA.getByName(sfInstrument.name);
+          sfInstrument.gain = currentInstrument.gain;
 
           haxThis.instruments[currentInstrument.role] = sfInstrument;
 
@@ -84,17 +91,30 @@ class MidiPlayer {
     const instr1 = this.instruments.melody;
     const instr2 = this.instruments.accompaniment;
     const instr3 = this.instruments.bass;
+    const volumePct = this.volume / 100;
 
     if (!this.playbackLocked && event.name === 'Note on' && event.velocity > 0) {
       switch (event.track) {
         case 1:
-          instr1.play(event.noteName, this.audioContext.currentTime, { gain: instr1.gain });
+          instr1.play(
+            event.noteName,
+            this.audioContext.currentTime,
+            { gain: instr1.gain * volumePct},
+          );
           break;
         case 2:
-          instr2.play(event.noteName, this.audioContext.currentTime, { gain: instr2.gain });
+          instr2.play(
+            event.noteName,
+            this.audioContext.currentTime,
+            { gain: instr2.gain * volumePct},
+          );
           break;
         case 3:
-          instr3.play(event.noteName, this.audioContext.currentTime, { gain: instr3.gain });
+          instr3.play(
+            event.noteName,
+            this.audioContext.currentTime,
+            { gain: instr3.gain * volumePct},
+          );
           break;
         default:
             // nothing!
@@ -169,6 +189,7 @@ class MidiPlayer {
       this.stopPlayback();
       this.playbackLocked = false;
       this.player.loadDataUri(strMidi);
+      this.player.setTempo(this.tempo);
       this.player.play();
     } else {
       console.warn("[AutoComposerMidi._playMelody()] Player isn't initialized yet...");
@@ -183,6 +204,20 @@ class MidiPlayer {
     this.instruments.accompaniment.stop();
     this.instruments.bass.stop();
     this.player.stop();
+  }
+
+  /**
+    * Sets tempo for player
+    */
+  setTempo(tempoInput) {
+    this.tempo = tempoInput;
+  }
+
+  /**
+    * Sets volume for player
+    */
+  setVolume(volumeInput) {
+    this.volume = volumeInput;
   }
 }
 

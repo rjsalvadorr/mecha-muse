@@ -43,7 +43,10 @@ export default {
         msg += `\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
       }
       console.debug(msg);
-      EventBus.$emit('CLICK_PLAY', {});
+      EventBus.$emit('CLICK_PLAY', {
+        volume: parseInt(this.volume, 10),
+        tempo: parseInt(this.tempo, 10),
+      });
     },
     handleStop(evt) {
       let msg = 'FROM:\nhandleStop()';
