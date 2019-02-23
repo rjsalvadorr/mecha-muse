@@ -7,12 +7,30 @@
     </div>
     <div class="control-group control-group--slider">
       <span class="slider-label">Volume</span>
-      <input type="range" v-model="volume" id="sel-volume" class="slider-control sel-volume" name="sel-volume" min="0" max="100" />
+      <input
+        type="range"
+        v-model="volume"
+        v-on:change="handleVolumeChange"
+        id="sel-volume" 
+        class="slider-control sel-volume" 
+        name="sel-volume"
+        min="0"
+        max="100"
+      />
       <span class="slider-value">{{ volume }}</span>
     </div>
     <div class="control-group control-group--slider">
       <span class="slider-label">Tempo</span>
-      <input type="range" v-model="tempo" id="sel-tempo" class="slider-control sel-tempo" name="sel-tempo" min="50" max="200" />
+      <input
+        type="range"
+        v-model="tempo"
+        v-on:change="handleTempoChange"
+        id="sel-tempo"
+        class="slider-control sel-tempo"
+        name="sel-tempo"
+        min="50"
+        max="200"
+      />
       <span class="slider-value">{{ tempo }}</span>
     </div>
   </div>
@@ -43,10 +61,7 @@ export default {
         msg += `\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
       }
       console.debug(msg);
-      EventBus.$emit('CLICK_PLAY', {
-        volume: parseInt(this.volume, 10),
-        tempo: parseInt(this.tempo, 10),
-      });
+      EventBus.$emit('CLICK_PLAY', {});
     },
     handleStop(evt) {
       let msg = 'FROM:\nhandleStop()';
@@ -64,6 +79,26 @@ export default {
       console.debug(msg);
       EventBus.$emit('CLICK_DOWNLOAD', {});
     },
+    handleVolumeChange(evt) {
+      let msg = '';
+      if (evt) {
+        msg += `\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
+      }
+      console.debug(msg);
+      EventBus.$emit('CHANGE_VOLUME', {
+        volume: parseInt(this.volume, 10),
+      });
+    },
+    handleTempoChange(evt) {
+      let msg = '';
+      if (evt) {
+        msg += `\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
+      }
+      console.debug(msg);
+      EventBus.$emit('CHANGE_TEMPO', {
+        tempo: parseInt(this.tempo, 10),
+      });
+    }
   },
 };
 </script>

@@ -61,10 +61,8 @@ export default {
         MidiPlayer.playMelodySolo(this.selectedTrack.melody);
       }
     });
-    EventBus.$on('CLICK_PLAY', (payload) => {
+    EventBus.$on('CLICK_PLAY', () => {
       if (this.selectedTrack.melody) {
-        MidiPlayer.setTempo(payload.tempo);
-        MidiPlayer.setVolume(payload.volume);
         MidiPlayer.playMelodyWithAccompaniment(
           this.selectedTrack.melody,
           this.selectedTrack.accompaniment,
@@ -77,6 +75,12 @@ export default {
     });
     EventBus.$on('CHANGE_TRACK', (payload) => {
       this.selectedTrack = payload.selectedTrack;
+    });
+    EventBus.$on('CHANGE_VOLUME', (payload) => {
+      MidiPlayer.setVolume(payload.volume);
+    });
+    EventBus.$on('CHANGE_TEMPO', (payload) => {
+      MidiPlayer.setTempo(payload.tempo);
     });
   },
 };

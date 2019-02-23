@@ -211,6 +211,7 @@ class MidiPlayer {
     */
   setTempo(tempoInput) {
     this.tempo = tempoInput;
+    this.player.setTempo(tempoInput);
   }
 
   /**
