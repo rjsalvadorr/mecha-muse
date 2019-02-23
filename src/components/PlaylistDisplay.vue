@@ -1,7 +1,7 @@
 <template>
   <div class="playlist-display">
     <div class="playlist-item"
-      v-for="(item, index) in playlistItems"
+      v-for="item in playlistItems"
       @click="handleItemClick(item)"
       :key="item.id"
     >
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import EventBus from '../eventBus';
+
 export default {
   name: 'PlaylistDisplay',
   props: {
@@ -37,14 +39,14 @@ export default {
         {
           id: 2,
           name: 'test two',
-          melody: ['Bb4', 'B4', 'C5', 'D5'],
+          melody: ['D5', 'Bb4', 'B4', 'C5'],
           accompaniment: ['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2'],
           bassline: ['G1', 'E1', 'C2', 'D2'],
         },
         {
           id: 3,
           name: 'test three',
-          melody: ['Bb4', 'B4', 'C5', 'D5'],
+          melody: ['C5', 'D5', 'Bb4', 'B4'],
           accompaniment: ['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2'],
           bassline: ['G1', 'E1', 'C2', 'D2'],
         },
@@ -54,6 +56,9 @@ export default {
   methods: {
     handleItemClick(selectedItemInput) {
       this.selectedItem = selectedItemInput;
+      EventBus.$emit('CHANGE_TRACK', {
+        selectedTrack: this.selectedItem,
+      });
     },
   },
 };

@@ -2,7 +2,7 @@
  * Utility functions for numerical/math calculations
  */
 class CalcUtils {
-    /**
+  /**
      * Returns a random integer between the two given numbers
      * @static
      * @param {number} minimum - minimum number (inclusive)
@@ -16,7 +16,7 @@ class CalcUtils {
     // The maximum is exclusive and the minimum is inclusive
   }
 
-    /**
+  /**
      * Splits an integer into several random parts
      * @static
      * @param {number} numToSplit - integer to split

@@ -26,6 +26,8 @@
 
 
 <script>
+import EventBus from './eventBus';
+import MidiPlayer from './utils/midiPlayer';
 import DebugPanel from './components/DebugPanel.vue';
 import GenerationControls from './components/GenerationControls.vue';
 import NotationDisplay from './components/NotationDisplay.vue';
@@ -44,12 +46,36 @@ export default {
   data() {
     return {
       debugPanelEnabled: false,
+      selectedTrack: {},
     };
   },
   methods: {
     toggleDebugPanel() {
       this.debugPanelEnabled = !this.debugPanelEnabled;
     },
+  },
+  // event bus listeners
+  mounted() {
+    EventBus.$on('PLAY_MELODY_SOLO', () => {
+      if(this.selectedTrack.melody) {
+        MidiPlayer.playMelodySolo(this.selectedTrack.melody);
+      }
+    });
+    EventBus.$on('CLICK_PLAY', () => {
+      if(this.selectedTrack.melody) {
+        MidiPlayer.playMelodyWithAccompaniment(
+          this.selectedTrack.melody,
+          this.selectedTrack.accompaniment,
+          this.selectedTrack.bassline,
+        );
+      }
+    });
+    EventBus.$on('CLICK_STOP', () => {
+      MidiPlayer.stopPlayback();
+    });
+    EventBus.$on('CHANGE_TRACK', (payload) => {
+      this.selectedTrack = payload.selectedTrack;
+    });
   },
 };
 </script>

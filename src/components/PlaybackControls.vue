@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import EventBus from '../eventBus';
 import Button from './Button.vue';
 
 export default {
@@ -42,6 +43,7 @@ export default {
         msg += `\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
       }
       console.debug(msg);
+      EventBus.$emit('CLICK_PLAY', {});
     },
     handleStop(evt) {
       let msg = 'FROM:\nhandleStop()';
@@ -49,6 +51,7 @@ export default {
         msg += `\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
       }
       console.debug(msg);
+      EventBus.$emit('CLICK_STOP', {});
     },
     handleDownload(evt) {
       let msg = 'FROM:\nhandleDownload()';
@@ -56,6 +59,7 @@ export default {
         msg += `\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
       }
       console.debug(msg);
+      EventBus.$emit('CLICK_DOWNLOAD', {});
     },
   },
 };
