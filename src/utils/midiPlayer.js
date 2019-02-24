@@ -99,21 +99,21 @@ class MidiPlayer {
           instr1.play(
             event.noteName,
             this.audioContext.currentTime,
-            { gain: instr1.gain * volumePct},
+            { gain: instr1.gain * volumePct },
           );
           break;
         case 2:
           instr2.play(
             event.noteName,
             this.audioContext.currentTime,
-            { gain: instr2.gain * volumePct},
+            { gain: instr2.gain * volumePct },
           );
           break;
         case 3:
           instr3.play(
             event.noteName,
             this.audioContext.currentTime,
-            { gain: instr3.gain * volumePct},
+            { gain: instr3.gain * volumePct },
           );
           break;
         default:

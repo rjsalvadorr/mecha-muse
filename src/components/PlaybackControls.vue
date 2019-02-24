@@ -11,8 +11,8 @@
         type="range"
         v-model="volume"
         v-on:change="handleVolumeChange"
-        id="sel-volume" 
-        class="slider-control sel-volume" 
+        id="sel-volume"
+        class="slider-control sel-volume"
         name="sel-volume"
         min="0"
         max="100"
@@ -98,7 +98,7 @@ export default {
       EventBus.$emit('CHANGE_TEMPO', {
         tempo: parseInt(this.tempo, 10),
       });
-    }
+    },
   },
 };
 </script>
