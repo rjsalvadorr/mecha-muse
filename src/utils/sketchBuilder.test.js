@@ -1,24 +1,26 @@
 import SketchBuilder from './sketchBuilder';
 
-test('builds chords properly', () => {
-  const numChords = 2;
-  const numBeatUnits = 2;
-  const testChordResults = [
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
-    buildChords('nope', numChords, numBeatUnits),
+const numChords = 2;
+const numBeatUnits = 32;
+let testChordResults = [];
+
+beforeEach(() => {
+  testChordResults = [
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
+    SketchBuilder.buildChords('nope', numChords, numBeatUnits),
   ];
+});
 
-  console.log(`chords = ${testChordResults}`);
-
-  for (result in testChordResults) {
+test('builds the right number of chords', () => {
+  for (let result of testChordResults) {
     expect(result.length).toBeLessThanOrEqual(numChords * 1.5);
     expect(result.length).toBeGreaterThanOrEqual(numChords);
   }

@@ -32,10 +32,9 @@ class SketchBuilder {
      * @returns array of chords
      */
   static buildChords(key, numMeasures, beatUnits) {
-    const chordsUpperBound = Math.floor(numMeasures * 1.5);
+    const chordsUpperBound = Math.floor(numMeasures * 1.5) + 1;
     const numChords = CalcUtils.getRandomInt(numMeasures, chordsUpperBound);
-
-    const durations = splitInteger(beatUnits, numChords);
+    const durations = CalcUtils.splitInteger(beatUnits, numChords);
     const chords = [];
     for (const chordDuration of durations) {
       chords.push(new Chord('test', chordDuration, 'testy'));

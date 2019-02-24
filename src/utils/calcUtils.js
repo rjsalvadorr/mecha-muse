@@ -24,6 +24,13 @@ class CalcUtils {
      * @returns {number[]} addends
      */
   static splitInteger(numToSplit, numSections) {
+    if(numSections >= numToSplit) {
+      throw "# of sections must be smaller than # to split!";
+    }
+    if(numSections <= 0 || numToSplit <= 0) {
+      throw "# of sections and # to split must be larger than 0!";
+    }
+
     const splitValues = [];
     let remaining = numToSplit;
     let nextNumber;
