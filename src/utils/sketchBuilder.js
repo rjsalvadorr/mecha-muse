@@ -1,3 +1,7 @@
+import shuffle from 'lodash/shuffle';
+import * as Key from "tonal-key"
+import * as RomanNumeral from "tonal-roman-numeral"
+
 import Note from '../entities/note';
 import Chord from '../entities/chord';
 import Sketch from '../entities/sketch';
@@ -36,9 +40,23 @@ class SketchBuilder {
     const numChords = CalcUtils.getRandomInt(numMeasures, chordsUpperBound);
     const durations = CalcUtils.splitInteger(beatUnits, numChords);
     const chords = [];
-    for (const chordDuration of durations) {
-      chords.push(new Chord('test', chordDuration, 'testy'));
+    const availableChords = [1, 4, 5];
+    const chordDegrees = [1];
+
+    let randomChordNum;
+    for(let i = 1; i < numChords; i++) {
+      randomChordNum = shuffle(availableChords)[0];
+      chordDegrees.push(randomChordNum)
     }
+
+    let randomChord;
+    let harmonicContext;
+    for(let j = 0; j < numChords; j++) {
+      randomChord = Key.chords(key, [chordDegrees[j]]);
+      harmonicContext = RomanNumeral.fromDegree(chordDegrees[j], key.includes('major'));
+      chords.push(new Chord(randomChord[0], durations[j], harmonicContext));
+    }
+
     return chords;
   }
 
