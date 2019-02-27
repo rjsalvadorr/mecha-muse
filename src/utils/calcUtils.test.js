@@ -55,13 +55,17 @@ test('handles negative and invalid numbers for integer splitting', () => {
 });
 
 test('splits integer arrays properly', () => {
-  const testArray = [16, 8, 8];
-  const resultArray1 = CalcUtils.splitIntegerArray(testArray, 4);
-  const resultArray2 = CalcUtils.splitIntegerArray(testArray, 5);
-  const resultArray3 = CalcUtils.splitIntegerArray(testArray, 6);
+  const testArray = [16, 8, 8, 16, 10, 6];
+  const testResults = [];
+  let splits;
+
+  for(let i = 0; i < 12; i++) {
+    splits = 7 + i;
+    testResults.push(CalcUtils.splitIntegerArray(testArray, splits));
+  }
 
   // Check that sums line up
-  expect(CalcUtils.getIntArraySum(resultArray1)).toBe(CalcUtils.getIntArraySum(testArray));
-  expect(CalcUtils.getIntArraySum(resultArray2)).toBe(CalcUtils.getIntArraySum(testArray));
-  expect(CalcUtils.getIntArraySum(resultArray3)).toBe(CalcUtils.getIntArraySum(testArray));
+  for(let j = 0; j < 12; j++) {
+    expect(CalcUtils.getIntArraySum(testArray)).toBe(CalcUtils.getIntArraySum(testResults[j]));
+  }
 });

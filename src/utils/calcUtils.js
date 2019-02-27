@@ -35,7 +35,9 @@ class CalcUtils {
      */
   static splitInteger(numToSplit, numSections) {
     if(numSections >= numToSplit) {
-      throw "# of sections must be smaller than # to split!";
+      let errorMsg = "# of sections must be smaller than # to split!";
+      errorMsg += ` (${numToSplit}, ${numSections})`;
+      throw errorMsg;
     }
     if(numSections <= 0 || numToSplit <= 0) {
       throw "# of sections and # to split must be larger than 0!";
@@ -80,13 +82,21 @@ class CalcUtils {
     let randomIndex;
     let arraySlice1;
     let arraySlice2;
+    let elementToSplit;
     let splitVals;
 
     for(let i = 0; i < numSplits; i++) {
       randomIndex = this.getRandomInt(0, currentArray.length);
       arraySlice1 = currentArray.slice(0, randomIndex + 1);
       arraySlice2 = currentArray.slice(randomIndex + 1, currentArray.length);
-      splitVals = this.splitInteger(arraySlice1.pop(), 2);
+      elementToSplit = arraySlice1.pop();
+      if(elementToSplit <= 2) {
+        // we want to skip this iteration of the loop,
+        // and make the loop go for another time.
+        i = i -1;
+        continue
+      }
+      splitVals = this.splitInteger(elementToSplit, 2);
       arraySlice1.push(splitVals[0]);
       arraySlice1.push(splitVals[1]);
       currentArray = arraySlice1.concat(arraySlice2);

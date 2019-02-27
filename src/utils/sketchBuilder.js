@@ -1,4 +1,6 @@
 import shuffle from 'lodash/shuffle';
+import map from 'lodash/map';
+
 import * as Key from "tonal-key"
 import * as RomanNumeral from "tonal-roman-numeral"
 
@@ -35,7 +37,12 @@ class SketchBuilder {
      * @param {string} key - thing
      * @returns array of chords
      */
-  static buildChords(key, numMeasures, beatUnits) {
+  static buildChords(key, numMeasures, beatUnits, shortestChordDuration = 1) {
+    // we can use this shortestChordDuration for changing harmonic rhythm
+    // 1 = 16th notes
+    // 2 = 8th notes
+    // 4 = quarter notes
+    const calcBeatUnits = beatUnits / shortestChordDuration;
     const chordsUpperBound = Math.floor(numMeasures * 1.5) + 1;
     const numChords = CalcUtils.getRandomInt(numMeasures, chordsUpperBound);
     const durations = CalcUtils.splitInteger(beatUnits, numChords);
@@ -51,10 +58,12 @@ class SketchBuilder {
 
     let randomChord;
     let harmonicContext;
+    let recalcDuration;
     for(let j = 0; j < numChords; j++) {
       randomChord = Key.chords(key, [chordDegrees[j]]);
       harmonicContext = RomanNumeral.fromDegree(chordDegrees[j], key.includes('major'));
-      chords.push(new Chord(randomChord[0], durations[j], harmonicContext));
+      recalcDuration = durations[j] * shortestChordDuration
+      chords.push(new Chord(randomChord[0], recalcDuration, harmonicContext));
     }
 
     return chords;
@@ -68,8 +77,18 @@ class SketchBuilder {
      * @returns array of chords
      */
   static buildMelody(key, chords) {
-    const dummySketch = new Sketch();
-    return dummySketch;
+    const chordDurations = map(chords, (chord) => {
+      return chord.duration;
+    });
+    const numNotes = Math.floor(chords.length * 1.5) + 1;
+    const noteDurations = CalcUtils.splitIntegerArray(chordDurations, numNotes);
+    const melodyNotes = [];
+    
+    for(let noteDuration of noteDurations) {
+      melodyNotes.push(new Note('C4', noteDuration, 'do'));
+    }
+
+    return melodyNotes;
   }
 
   /**
