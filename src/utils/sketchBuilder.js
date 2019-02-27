@@ -16,7 +16,7 @@ class SketchBuilder {
   /**
      * Builds randomly-generated music sketches
      * @static
-     * @param {string} key - thing
+     * @param {string} thing - thing
      * @param {number} numSketches - thing
      * @returns array of sketches
      */
@@ -31,10 +31,13 @@ class SketchBuilder {
   }
 
   /**
-     * Things
+     * Builds chord progressions
      * @static
      * @private
-     * @param {string} key - thing
+     * @param {string} key - musical key, like "A major"
+     * @param {string} numMeasures - duration of music, in measures
+     * @param {string} beatUnits - total beat units
+     * @param {string} shortestChordDuration - shortest chord duration (in beat units)
      * @returns array of chords
      */
   static buildChords(key, numMeasures, beatUnits, shortestChordDuration = 1) {
@@ -70,11 +73,12 @@ class SketchBuilder {
   }
 
   /**
-     * Things
+     * Builds melodies
      * @static
      * @private
-     * @param {string} key - thing
-     * @returns array of chords
+     * @param {string} key - key
+     * @param {string} chords - chord progression, from buildChords()
+     * @returns array of notes
      */
   static buildMelody(key, chords) {
     const chordDurations = map(chords, (chord) => {
@@ -95,7 +99,7 @@ class SketchBuilder {
      * Things
      * @static
      * @private
-     * @param {string} key - thing
+     * @param {string} thing - thing
      * @returns array of chords
      */
   static buildAccompaniment(key, chords) {
@@ -107,7 +111,7 @@ class SketchBuilder {
      * Things
      * @static
      * @private
-     * @param {string} key - thing
+     * @param {string} thing - thing
      * @returns array of chords
      */
   static buildBassline(key, chords) {
