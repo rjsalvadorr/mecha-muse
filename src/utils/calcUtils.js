@@ -2,7 +2,7 @@
  * Utility functions for numerical/math calculations
  */
 class CalcUtils {
-    /**
+  /**
      * Returns the sum of an integer array's values
      * @static
      * @param {number[]} integerArray - array of integers
@@ -12,7 +12,7 @@ class CalcUtils {
     return integerArray.reduce((a, b) => a + b, 0);
   }
 
-    /**
+  /**
      * Returns a random integer between the two given numbers
      * @static
      * @param {number} minimum - minimum number (inclusive)
@@ -26,7 +26,7 @@ class CalcUtils {
     // The maximum is exclusive and the minimum is inclusive
   }
 
-    /**
+  /**
      * Splits an integer into several random parts
      * @static
      * @param {number} numToSplit - integer to split
@@ -34,13 +34,13 @@ class CalcUtils {
      * @returns {number[]} addends
      */
   static splitInteger(numToSplit, numSections) {
-    if(numSections >= numToSplit) {
-      let errorMsg = "# of sections must be smaller than # to split!";
+    if (numSections >= numToSplit) {
+      let errorMsg = '# of sections must be smaller than # to split!';
       errorMsg += ` (${numToSplit}, ${numSections})`;
-      throw errorMsg;
+      throw Error(errorMsg);
     }
-    if(numSections <= 0 || numToSplit <= 0) {
-      throw "# of sections and # to split must be larger than 0!";
+    if (numSections <= 0 || numToSplit <= 0) {
+      throw Error('# of sections and # to split must be larger than 0!');
     }
 
     const splitValues = [];
@@ -55,7 +55,7 @@ class CalcUtils {
     return splitValues;
   }
 
-    /**
+  /**
      * Splits an integer array into more parts
      * @static
      * @param {number} arrayToSplit - integer array to split
@@ -63,18 +63,18 @@ class CalcUtils {
      * @returns {number[]} larger integer array
      */
   static splitIntegerArray(arrayToSplit, numSections) {
-    if(!numSections || numSections <= 0) {
-      throw "# to split must be larger than 0!";
+    if (!numSections || numSections <= 0) {
+      throw Error('# to split must be larger than 0!');
     }
-    if(!arrayToSplit || arrayToSplit.length === 0) {
-      throw "arrayToSplit must have values!";
+    if (!arrayToSplit || arrayToSplit.length === 0) {
+      throw Error('arrayToSplit must have values!');
     }
-    if(numSections <= arrayToSplit.length) {
-      throw "# of sections must be larger than array length!";
+    if (numSections <= arrayToSplit.length) {
+      throw Error('# of sections must be larger than array length!');
     }
     const arrayTotal = this.getIntArraySum(arrayToSplit);
-    if(arrayTotal <= numSections) {
-      throw "Integer array total must be larger than number of sections!";
+    if (arrayTotal <= numSections) {
+      throw Error('Integer array total must be larger than number of sections!');
     }
 
     const numSplits = numSections - arrayToSplit.length;
@@ -85,24 +85,37 @@ class CalcUtils {
     let elementToSplit;
     let splitVals;
 
-    for(let i = 0; i < numSplits; i++) {
+    for (let i = 0; i < numSplits; i++) {
       randomIndex = this.getRandomInt(0, currentArray.length);
       arraySlice1 = currentArray.slice(0, randomIndex + 1);
       arraySlice2 = currentArray.slice(randomIndex + 1, currentArray.length);
       elementToSplit = arraySlice1.pop();
-      if(elementToSplit <= 2) {
+      if (elementToSplit <= 2) {
         // we want to skip this iteration of the loop,
         // and make the loop go for another time.
-        i = i -1;
-        continue
+        i -= 1;
+        continue;
       }
       splitVals = this.splitInteger(elementToSplit, 2);
       arraySlice1.push(splitVals[0]);
       arraySlice1.push(splitVals[1]);
       currentArray = arraySlice1.concat(arraySlice2);
     }
-    
+
     return currentArray;
+  }
+
+  /**
+   * Prints variables to the console.
+   * @static
+   * @param {{}[]}} nameValuePairs - name/value of variable to print
+   */
+  static printVariables(nameValuePairs) {
+    let msg = '';
+    for (const nameValuePair of nameValuePairs) {
+      msg += `${nameValuePair.name} = ${JSON.stringify(nameValuePair.value, null, 2)}\n`;
+    }
+    console.log(msg);
   }
 }
 

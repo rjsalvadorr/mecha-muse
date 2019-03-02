@@ -4,8 +4,8 @@
       <h1 class="debug-panel--heading">Debug/test panel</h1>
       <div class="row">
         <div class="six columns">
-          <Button label="Test MIDI playback (solo)" :clickHandler="handleMidiPlayerTestSolo" /><br>
-          <Button label="Test MIDI playback (solo + accopmaniment)" :clickHandler="handleMidiPlayerTestGroup" /><br>
+          <Button label="Test MIDI playback (solo)" :clickHandler="handleNewPlayerTestSolo" /><br>
+          <Button label="Test MIDI playback (group)" :clickHandler="handleNewPlayerTestGroup" /><br>
           <Button label="Stop MIDI playback" :clickHandler="handleMidiPlayerStop" /><br>
         </div>
       </div>
@@ -27,40 +27,36 @@ export default {
     Button,
   },
   methods: {
-    handleMidiPlayerTestSolo(evt) {
-      const testMelody = ['Bb4', 'B4', 'C5', 'D5'];
-      // MidiPlayer.playMelodySolo(testMelody);
+    handleNewPlayerTestSolo() {
+      const testSketch = {};
+      testSketch.melody = [];
+      testSketch.accompaniment = [];
+      testSketch.bassline = [];
+      testSketch.chords = [];
+      testSketch.key = 'G major';
+      testSketch.tags = [];
 
-      let msg = `STUB TEST FROM:\n${this.$vnode.tag}`;
-      if (evt) {
-        msg += `\n\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
-      }
-      msg += `\nMELODY:\n${JSON.stringify(testMelody, null, 2)}`;
       // eslint-disable-next-line
-      console.debug(msg);
-      EventBus.$emit('PLAY_MELODY_SOLO', {
-        melody: testMelody,
+      console.debug('DebugPanel.handleNewPlayerTestSolo()');
+      EventBus.$emit('TEST_MELODY_SOLO', {
+        melody: testSketch.melody,
       });
     },
-    handleMidiPlayerTestGroup(evt) {
-      const testMelody = ['Bb4', 'B4', 'C5', 'D5'];
-      const testMelodies = [];
-      testMelodies.push(testMelody);
-      testMelodies.push(['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2']);
-      testMelodies.push(['G1', 'E1', 'C2', 'D2']);
+    handleNewPlayerTestGroup() {
+      const testSketch = {};
+      testSketch.melody = [];
+      testSketch.accompaniment = [];
+      testSketch.bassline = [];
+      testSketch.chords = [];
+      testSketch.key = 'G major';
+      testSketch.tags = [];
 
-      // MidiPlayer.playMelodyWithAccompaniment(testMelodies[0], testMelodies[1], testMelodies[2]);
-      let msg = `STUB TEST FROM:\n${this.$vnode.tag}`;
-      if (evt) {
-        msg += `\n\nEVENT:\n${JSON.stringify(evt, null, 2)}`;
-      }
-      msg += `\nMELODIES:\n${JSON.stringify(testMelodies, null, 2)}`;
       // eslint-disable-next-line
-      console.debug(msg);
-      EventBus.$emit('PLAY_MELODY_ACCOMP', {
-        melody: testMelodies[0],
-        accompaniment: testMelodies[1],
-        bass: testMelodies[2],
+      console.debug('DebugPanel.handleNewPlayerTestGroup()');
+      EventBus.$emit('TEST_MELODY_ACCOMP', {
+        melody: testSketch.melody,
+        accompaniment: testSketch.accompaniment,
+        bass: testSketch.bassline,
       });
     },
     handleMidiPlayerStop(evt) {

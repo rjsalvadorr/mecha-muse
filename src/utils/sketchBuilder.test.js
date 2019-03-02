@@ -16,14 +16,14 @@ const keys = [
   'D minor',
   'E major',
   'E minor',
-]
+];
 let generatedChords = [];
 let generatedMelodies = [];
 
 beforeAll(() => {
   let key;
-  
-  for(let i = 0; i < keys.length; i++) {
+
+  for (let i = 0; i < keys.length; i++) {
     key = keys[i];
     const chordProgs = SketchBuilder.buildChords(key, numChords, numBeatUnits, shortestChordDuration);
     generatedChords.push(chordProgs);
@@ -37,14 +37,14 @@ afterAll(() => {
 });
 
 test('builds chords', () => {
-  for (let result of generatedChords) {
+  for (const result of generatedChords) {
     expect(result.length).toBeLessThanOrEqual(numChords * 1.5);
     expect(result.length).toBeGreaterThanOrEqual(numChords);
   }
 });
 
 test('builds melodies', () => {
-  for (let result of generatedMelodies) {
+  for (const result of generatedMelodies) {
     expect(result).toBeTruthy();
   }
 });

@@ -13,19 +13,19 @@ test('splits integers properly', () => {
     CalcUtils.splitInteger(num1, 5),
     CalcUtils.splitInteger(num1, 7),
   ];
-  for(let res of num1Results) {
-    const total = CalcUtils.getIntArraySum(res)
+  for (const res of num1Results) {
+    const total = CalcUtils.getIntArraySum(res);
     expect(total).toBe(num1);
   }
-  
+
   const num2 = 33;
   const num2Results = [
     CalcUtils.splitInteger(num2, 9),
     CalcUtils.splitInteger(num2, 8),
     CalcUtils.splitInteger(num2, 15),
   ];
-  for(let res of num2Results) {
-    const total = CalcUtils.getIntArraySum(res)
+  for (const res of num2Results) {
+    const total = CalcUtils.getIntArraySum(res);
     expect(total).toBe(num2);
   }
 });
@@ -59,13 +59,13 @@ test('splits integer arrays properly', () => {
   const testResults = [];
   let splits;
 
-  for(let i = 0; i < 12; i++) {
+  for (let i = 0; i < 12; i++) {
     splits = 7 + i;
     testResults.push(CalcUtils.splitIntegerArray(testArray, splits));
   }
 
   // Check that sums line up
-  for(let j = 0; j < 12; j++) {
+  for (let j = 0; j < 12; j++) {
     expect(CalcUtils.getIntArraySum(testArray)).toBe(CalcUtils.getIntArraySum(testResults[j]));
   }
 });

@@ -3,6 +3,10 @@ const customRules = {
   'array-callback-return': 'off',
   'no-loop-func': 'off',
   'class-methods-use-this': 'off',
+  'no-restricted-syntax': 'off',
+  'import/no-extraneous-dependencies': 'off',
+  'no-continue': 'off',
+  'no-param-reassign': 'off',
 };
 
 module.exports = {

@@ -1,8 +1,8 @@
 import shuffle from 'lodash/shuffle';
 import map from 'lodash/map';
 
-import * as Key from "tonal-key"
-import * as RomanNumeral from "tonal-roman-numeral"
+import * as Key from 'tonal-key';
+import * as RomanNumeral from 'tonal-roman-numeral';
 
 import Note from '../entities/note';
 import Chord from '../entities/chord';
@@ -24,6 +24,11 @@ class SketchBuilder {
     const beatUnitsPerMeasure = 16; // Using 16th notes in 4/4 for now
     const measures = numMeasures || 2;
     const beatUnits = measures * beatUnitsPerMeasure;
+
+    CalcUtils.printVariables([
+      { name: 'measures', value: measures },
+      { name: 'beatUnits', value: beatUnits },
+    ]);
 
     const sketch = new Sketch();
     sketch.chords = this.buildChords;
@@ -48,24 +53,24 @@ class SketchBuilder {
     const calcBeatUnits = beatUnits / shortestChordDuration;
     const chordsUpperBound = Math.floor(numMeasures * 1.5) + 1;
     const numChords = CalcUtils.getRandomInt(numMeasures, chordsUpperBound);
-    const durations = CalcUtils.splitInteger(beatUnits, numChords);
+    const durations = CalcUtils.splitInteger(calcBeatUnits, numChords);
     const chords = [];
     const availableChords = [1, 4, 5];
     const chordDegrees = [1];
 
     let randomChordNum;
-    for(let i = 1; i < numChords; i++) {
+    for (let i = 1; i < numChords; i++) {
       randomChordNum = shuffle(availableChords)[0];
-      chordDegrees.push(randomChordNum)
+      chordDegrees.push(randomChordNum);
     }
 
     let randomChord;
     let harmonicContext;
     let recalcDuration;
-    for(let j = 0; j < numChords; j++) {
+    for (let j = 0; j < numChords; j++) {
       randomChord = Key.chords(key, [chordDegrees[j]]);
       harmonicContext = RomanNumeral.fromDegree(chordDegrees[j], key.includes('major'));
-      recalcDuration = durations[j] * shortestChordDuration
+      recalcDuration = durations[j] * shortestChordDuration;
       chords.push(new Chord(randomChord[0], recalcDuration, harmonicContext));
     }
 
@@ -81,14 +86,12 @@ class SketchBuilder {
      * @returns array of notes
      */
   static buildMelody(key, chords) {
-    const chordDurations = map(chords, (chord) => {
-      return chord.duration;
-    });
+    const chordDurations = map(chords, chord => chord.duration);
     const numNotes = Math.floor(chords.length * 1.5) + 1;
     const noteDurations = CalcUtils.splitIntegerArray(chordDurations, numNotes);
     const melodyNotes = [];
-    
-    for(let noteDuration of noteDurations) {
+
+    for (const noteDuration of noteDurations) {
       melodyNotes.push(new Note('C4', noteDuration, 'do'));
     }
 
@@ -104,6 +107,12 @@ class SketchBuilder {
      */
   static buildAccompaniment(key, chords) {
     const dummySketch = new Sketch();
+
+    CalcUtils.printVariables([
+      { name: 'key', value: key },
+      { name: 'chords', value: chords },
+    ]);
+
     return dummySketch;
   }
 
@@ -116,6 +125,12 @@ class SketchBuilder {
      */
   static buildBassline(key, chords) {
     const dummySketch = new Sketch();
+
+    CalcUtils.printVariables([
+      { name: 'key', value: key },
+      { name: 'chords', value: chords },
+    ]);
+
     return dummySketch;
   }
 }
