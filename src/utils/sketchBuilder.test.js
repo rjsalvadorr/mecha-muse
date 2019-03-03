@@ -1,4 +1,5 @@
 import SketchBuilder from './sketchBuilder';
+import CalcUtils from './calcUtils';
 
 const numChords = 2;
 const shortestChordDuration = 2;
@@ -19,6 +20,7 @@ const keys = [
 ];
 let generatedChords = [];
 let generatedMelodies = [];
+let generatedSketches = [];
 
 beforeAll(() => {
   let key;
@@ -28,6 +30,7 @@ beforeAll(() => {
     const chordProgs = SketchBuilder.buildChords(key, numChords, numBeatUnits, shortestChordDuration);
     generatedChords.push(chordProgs);
     generatedMelodies.push(SketchBuilder.buildMelody(key, chordProgs));
+    generatedSketches.push(SketchBuilder.buildSketches(key, 2, 2));
   }
 });
 
@@ -45,6 +48,13 @@ test('builds chords', () => {
 
 test('builds melodies', () => {
   for (const result of generatedMelodies) {
+    expect(result).toBeTruthy();
+  }
+});
+
+test('builds sketches', () => {
+  for (const result of generatedSketches) {
+    CalcUtils.printVariables([{ name: 'sketch', value: result }]);
     expect(result).toBeTruthy();
   }
 });

@@ -16,8 +16,9 @@ class SketchBuilder {
   /**
      * Builds randomly-generated music sketches
      * @static
-     * @param {string} thing - thing
-     * @param {number} numSketches - thing
+     * @param {string} key - musical key
+     * @param {number} numSketches - number of sketches to return
+     * @param {number} numMeasures - number of measures for each sketch
      * @returns array of sketches
      */
   static buildSketches(key, numSketches, numMeasures) {
@@ -26,13 +27,26 @@ class SketchBuilder {
     const beatUnits = measures * beatUnitsPerMeasure;
 
     CalcUtils.printVariables([
+      { name: 'key', value: key },
       { name: 'measures', value: measures },
       { name: 'beatUnits', value: beatUnits },
     ]);
 
-    const sketch = new Sketch();
-    sketch.chords = this.buildChords;
-    return sketch;
+    const sketches = [];
+    let sketch;
+    for(let i = 0; i < numSketches; i++) {
+      sketch = new Sketch();
+      sketch.chords = this.buildChords(
+        key,
+        measures,
+        beatUnits,
+        2, //shortestChordDuration
+      );
+      sketch.melody = this.buildMelody(key, sketch.chords);
+      sketches.push(sketch);
+    }
+
+    return sketches;
   }
 
   /**

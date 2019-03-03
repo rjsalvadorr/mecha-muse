@@ -16,7 +16,60 @@
 <script>
 import Button from './Button.vue';
 import EventBus from '../eventBus';
+import Sketch from '../enities/sketch';
 // import MidiPlayer from '../utils/midiPlayer';
+
+function buildTestSketch() {
+  const testSketch = newSketch();
+
+  testSketch.melody = [
+    {
+      pitch: "C4",
+      duration: 5,
+      harmonicContext: "do"
+    },
+    {
+      pitch: "C4",
+      duration: 3,
+      harmonicContext: "do"
+    },
+    {
+      pitch: "C4",
+      duration: 4,
+      harmonicContext: "do"
+    },
+    {
+      pitch: "C4",
+      duration: 10,
+      harmonicContext: "do"
+    },
+    {
+      pitch: "C4",
+      duration: 10,
+      harmonicContext: "do"
+    }
+  ];
+
+  testSketch.chords = [
+    {
+      name: "EMaj7",
+      duration: 12,
+      harmonicContext: "I"
+    },
+    {
+      name: "B7",
+      duration: 10,
+      harmonicContext: "V"
+    },
+    {
+      name: "B7",
+      duration: 10,
+      harmonicContext: "V"
+    }
+  ],
+
+  return testSketch;
+}
 
 export default {
   name: 'DebugPanel',
@@ -28,13 +81,7 @@ export default {
   },
   methods: {
     handleNewPlayerTestSolo() {
-      const testSketch = {};
-      testSketch.melody = [];
-      testSketch.accompaniment = [];
-      testSketch.bassline = [];
-      testSketch.chords = [];
-      testSketch.key = 'G major';
-      testSketch.tags = [];
+      testSketch = buildTestSketch();
 
       // eslint-disable-next-line
       console.debug('DebugPanel.handleNewPlayerTestSolo()');
@@ -43,13 +90,7 @@ export default {
       });
     },
     handleNewPlayerTestGroup() {
-      const testSketch = {};
-      testSketch.melody = [];
-      testSketch.accompaniment = [];
-      testSketch.bassline = [];
-      testSketch.chords = [];
-      testSketch.key = 'G major';
-      testSketch.tags = [];
+      const testSketch = buildTestSketch();
 
       // eslint-disable-next-line
       console.debug('DebugPanel.handleNewPlayerTestGroup()');

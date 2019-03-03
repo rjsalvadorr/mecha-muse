@@ -41,6 +41,7 @@
     "jest": "^24.1.0",
     "jsdoc": "^3.5.5",
     "node-sass": "^4.9.0",
+    "prettier": "1.16.4",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   }
