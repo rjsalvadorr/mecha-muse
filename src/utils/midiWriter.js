@@ -5,40 +5,47 @@ import AcConstants from './constants';
 const INSTRUMENT_DATA = AcConstants.instrumentData;
 
 /**
-* Submodule responsible for generating MIDI files for future playback.
-*/
+ * Submodule responsible for generating MIDI files for future playback.
+ */
 
 class MidiWriter {
   /**
-    * Builds MIDI info for a note or chord
-    * @private
-    * @param {number[]} arrNumMidi - MIDI numbers for a set of pitches
-    * @param {number} duration - MIDI number for a pitch
-    * @param {number} wait
-    * @return {MidiWriter.NoteEvent} - ???
-    */
+   * Builds MIDI info for a note or chord
+   * @private
+   * @param {number[]} arrNumMidi - MIDI numbers for a set of pitches
+   * @param {number} duration - MIDI number for a pitch
+   * @param {number} wait
+   * @return {MidiWriter.NoteEvent} - ???
+   */
   _buildMidi(arrNumMidi, duration, wait) {
     let waitTime = wait;
     if (!waitTime) {
       waitTime = '0';
     }
     return new GMidiWriter.NoteEvent({
-      pitch: arrNumMidi, duration, waitTime, velocity: 100,
+      pitch: arrNumMidi,
+      duration,
+      waitTime,
+      velocity: 100,
     });
   }
 
   /**
-    * Builds a Track from a given chord.
-    * @private
-    * @param {string[]} arrChordNotes - chordNotes
-    * @param {Object} instrData - instrument data for track
-    * @return {Track} - a MidiWriter Track
-    */
+   * Builds a Track from a given chord.
+   * @private
+   * @param {string[]} arrChordNotes - chordNotes
+   * @param {Object} instrData - instrument data for track
+   * @return {Track} - a MidiWriter Track
+   */
   _buildTrack(arrChordNotes, instrData) {
     let notes;
     let midiNumbers;
     const returnTrack = new GMidiWriter.Track();
-    returnTrack.addEvent(new GMidiWriter.ProgramChangeEvent({ instrument: instrData.midiInstrumentCode }));
+    returnTrack.addEvent(
+      new GMidiWriter.ProgramChangeEvent({
+        instrument: instrData.midiInstrumentCode,
+      }),
+    );
     returnTrack.addInstrumentName(instrData.name);
 
     for (let i = 0; i < arrChordNotes.length; i++) {
@@ -57,10 +64,10 @@ class MidiWriter {
   }
 
   /**
-    * Gets the MIDI data for a given melody.
-    * @param {string[]} arrMelody - our melody
-    * @return {string} - MIDI data, as a DataURI string
-    */
+   * Gets the MIDI data for a given melody.
+   * @param {string[]} arrMelody - our melody
+   * @return {string} - MIDI data, as a DataURI string
+   */
   buildMelodyMidi(arrMelody) {
     const tracks = [];
     tracks[0] = this._buildTrack(arrMelody, INSTRUMENT_DATA.melody);
@@ -71,12 +78,12 @@ class MidiWriter {
   }
 
   /**
-    * Gets the MIDI data for a given melody, with accompaniment.
-    * @param {string[]} arrMelody - main melody
-    * @param {string[]} arrAcompanimentLine - accompaniment line
-    * @param {string[]} arrBassLine - bass line
-    * @return {string} - MIDI data, as a DataURI string.
-    */
+   * Gets the MIDI data for a given melody, with accompaniment.
+   * @param {string[]} arrMelody - main melody
+   * @param {string[]} arrAcompanimentLine - accompaniment line
+   * @param {string[]} arrBassLine - bass line
+   * @return {string} - MIDI data, as a DataURI string.
+   */
   buildMelodyMidiWithAccompaniment(arrMelody, arrAcompanimentLine, arrBassLine) {
     const melodyTrack = this._buildTrack(arrMelody, INSTRUMENT_DATA.melody);
     const accompanimentTrack = this._buildTrack(arrAcompanimentLine, INSTRUMENT_DATA.accompaniment);

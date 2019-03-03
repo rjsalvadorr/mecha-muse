@@ -12,8 +12,9 @@
   "scripts": {
     "serve": "vue-cli-service lint && vue-cli-service serve",
     "build": "vue-cli-service lint && vue-cli-service build",
-    "start": "npm run serve",
-    "lint": "vue-cli-service lint",
+    "start": "yarn serve",
+    "prettier": "prettier --write \"src/**/*.js\"",
+    "lint": "yarn prettier && vue-cli-service lint",
     "test": "jest",
     "build-docs": "jsdoc src -r -d docs -R ./README.md",
     "serve-docs": "http-server docs"
@@ -37,11 +38,12 @@
     "@vue/eslint-config-prettier": "^3.0.3",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-jest": "^24.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "http-server": "^0.11.1",
     "jest": "^24.1.0",
     "jsdoc": "^3.5.5",
     "node-sass": "^4.9.0",
-    "prettier": "1.16.4",
+    "prettier": "^1.16.4",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   }

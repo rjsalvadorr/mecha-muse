@@ -1,13 +1,5 @@
-
 class mmSketch {
-  constructor(
-    melody,
-    accompaniment,
-    bassline,
-    chords,
-    key,
-    tags,
-  ) {
+  constructor(melody, accompaniment, bassline, chords, key, tags) {
     this.melody = melody || [];
     this.accompaniment = accompaniment || [];
     this.bassline = bassline || [];

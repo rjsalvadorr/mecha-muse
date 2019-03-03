@@ -3,22 +3,22 @@
  */
 class CalcUtils {
   /**
-     * Returns the sum of an integer array's values
-     * @static
-     * @param {number[]} integerArray - array of integers
-     * @returns {number} sum of integerArray's values
-     */
+   * Returns the sum of an integer array's values
+   * @static
+   * @param {number[]} integerArray - array of integers
+   * @returns {number} sum of integerArray's values
+   */
   static getIntArraySum(integerArray) {
     return integerArray.reduce((a, b) => a + b, 0);
   }
 
   /**
-     * Returns a random integer between the two given numbers
-     * @static
-     * @param {number} minimum - minimum number (inclusive)
-     * @param {number} maximum - maximum number (exclusive)
-     * @returns {number} random integer between the two parameters
-     */
+   * Returns a random integer between the two given numbers
+   * @static
+   * @param {number} minimum - minimum number (inclusive)
+   * @param {number} maximum - maximum number (exclusive)
+   * @returns {number} random integer between the two parameters
+   */
   static getRandomInt(minimum, maximum) {
     const min = Math.ceil(minimum);
     const max = Math.floor(maximum);
@@ -27,12 +27,12 @@ class CalcUtils {
   }
 
   /**
-     * Splits an integer into several random parts
-     * @static
-     * @param {number} numToSplit - integer to split
-     * @param {number} numSections - # of sections
-     * @returns {number[]} addends
-     */
+   * Splits an integer into several random parts
+   * @static
+   * @param {number} numToSplit - integer to split
+   * @param {number} numSections - # of sections
+   * @returns {number[]} addends
+   */
   static splitInteger(numToSplit, numSections) {
     if (numSections >= numToSplit) {
       let errorMsg = '# of sections must be smaller than # to split!';
@@ -56,12 +56,12 @@ class CalcUtils {
   }
 
   /**
-     * Splits an integer array into more parts
-     * @static
-     * @param {number} arrayToSplit - integer array to split
-     * @param {number} numSections - # of sections
-     * @returns {number[]} larger integer array
-     */
+   * Splits an integer array into more parts
+   * @static
+   * @param {number} arrayToSplit - integer array to split
+   * @param {number} numSections - # of sections
+   * @returns {number[]} larger integer array
+   */
   static splitIntegerArray(arrayToSplit, numSections) {
     if (!numSections || numSections <= 0) {
       throw Error('# to split must be larger than 0!');

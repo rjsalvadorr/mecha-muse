@@ -14,13 +14,13 @@ import CalcUtils from './calcUtils';
  */
 class SketchBuilder {
   /**
-     * Builds randomly-generated music sketches
-     * @static
-     * @param {string} key - musical key
-     * @param {number} numSketches - number of sketches to return
-     * @param {number} numMeasures - number of measures for each sketch
-     * @returns array of sketches
-     */
+   * Builds randomly-generated music sketches
+   * @static
+   * @param {string} key - musical key
+   * @param {number} numSketches - number of sketches to return
+   * @param {number} numMeasures - number of measures for each sketch
+   * @returns array of sketches
+   */
   static buildSketches(key, numSketches, numMeasures) {
     const beatUnitsPerMeasure = 16; // Using 16th notes in 4/4 for now
     const measures = numMeasures || 2;
@@ -34,13 +34,13 @@ class SketchBuilder {
 
     const sketches = [];
     let sketch;
-    for(let i = 0; i < numSketches; i++) {
+    for (let i = 0; i < numSketches; i++) {
       sketch = new Sketch();
       sketch.chords = this.buildChords(
         key,
         measures,
         beatUnits,
-        2, //shortestChordDuration
+        2, // shortestChordDuration
       );
       sketch.melody = this.buildMelody(key, sketch.chords);
       sketches.push(sketch);
@@ -50,15 +50,15 @@ class SketchBuilder {
   }
 
   /**
-     * Builds chord progressions
-     * @static
-     * @private
-     * @param {string} key - musical key, like "A major"
-     * @param {string} numMeasures - duration of music, in measures
-     * @param {string} beatUnits - total beat units
-     * @param {string} shortestChordDuration - shortest chord duration (in beat units)
-     * @returns array of chords
-     */
+   * Builds chord progressions
+   * @static
+   * @private
+   * @param {string} key - musical key, like "A major"
+   * @param {string} numMeasures - duration of music, in measures
+   * @param {string} beatUnits - total beat units
+   * @param {string} shortestChordDuration - shortest chord duration (in beat units)
+   * @returns array of chords
+   */
   static buildChords(key, numMeasures, beatUnits, shortestChordDuration = 1) {
     // we can use this shortestChordDuration for changing harmonic rhythm
     // 1 = 16th notes
@@ -92,13 +92,13 @@ class SketchBuilder {
   }
 
   /**
-     * Builds melodies
-     * @static
-     * @private
-     * @param {string} key - key
-     * @param {string} chords - chord progression, from buildChords()
-     * @returns array of notes
-     */
+   * Builds melodies
+   * @static
+   * @private
+   * @param {string} key - key
+   * @param {string} chords - chord progression, from buildChords()
+   * @returns array of notes
+   */
   static buildMelody(key, chords) {
     const chordDurations = map(chords, chord => chord.duration);
     const numNotes = Math.floor(chords.length * 1.5) + 1;
@@ -113,37 +113,31 @@ class SketchBuilder {
   }
 
   /**
-     * Things
-     * @static
-     * @private
-     * @param {string} thing - thing
-     * @returns array of chords
-     */
+   * Things
+   * @static
+   * @private
+   * @param {string} thing - thing
+   * @returns array of chords
+   */
   static buildAccompaniment(key, chords) {
     const dummySketch = new Sketch();
 
-    CalcUtils.printVariables([
-      { name: 'key', value: key },
-      { name: 'chords', value: chords },
-    ]);
+    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
 
     return dummySketch;
   }
 
   /**
-     * Things
-     * @static
-     * @private
-     * @param {string} thing - thing
-     * @returns array of chords
-     */
+   * Things
+   * @static
+   * @private
+   * @param {string} thing - thing
+   * @returns array of chords
+   */
   static buildBassline(key, chords) {
     const dummySketch = new Sketch();
 
-    CalcUtils.printVariables([
-      { name: 'key', value: key },
-      { name: 'chords', value: chords },
-    ]);
+    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
 
     return dummySketch;
   }

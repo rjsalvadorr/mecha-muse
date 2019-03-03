@@ -1,4 +1,3 @@
-
 class mmNote {
   constructor(pitch, duration, harmonicContext) {
     this.pitch = pitch || '';

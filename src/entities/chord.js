@@ -1,4 +1,3 @@
-
 class mmChord {
   constructor(name, duration, harmonicContext) {
     this.name = name || '';

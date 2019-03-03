@@ -11,9 +11,9 @@ const GMidiPlayer = midiPlayer || {};
 const tonalNote = Note || {};
 
 /**
-* Deprecated submodule responsible for playing audio on the browser.
-* @emits {statusUpdate} - Emits this event when the audio player loads.
-*/
+ * Deprecated submodule responsible for playing audio on the browser.
+ * @emits {statusUpdate} - Emits this event when the audio player loads.
+ */
 class MidiPlayerLegacy {
   constructor() {
     this.instruments = {};
@@ -56,7 +56,7 @@ class MidiPlayerLegacy {
         sfOptions = {
           soundfont: 'FluidR3_GM',
           // TODO - find a way to limit the notes. This approach doesn't work for some reason...
-        // notes: instrNotes
+          // notes: instrNotes
         };
 
         Soundfont.instrument(
@@ -82,10 +82,10 @@ class MidiPlayerLegacy {
   }
 
   /**
-    * Triggers the note playing for all instruments. Called for every MIDI event in the app.
-    * @private
-    * @param {number} event - MIDI event
-    */
+   * Triggers the note playing for all instruments. Called for every MIDI event in the app.
+   * @private
+   * @param {number} event - MIDI event
+   */
   _midiCallback(event) {
     // callback for MIDI events
     const instr1 = this.instruments.melody;
@@ -96,28 +96,22 @@ class MidiPlayerLegacy {
     if (!this.playbackLocked && event.name === 'Note on' && event.velocity > 0) {
       switch (event.track) {
         case 1:
-          instr1.play(
-            event.noteName,
-            this.audioContext.currentTime,
-            { gain: instr1.gain * volumePct },
-          );
+          instr1.play(event.noteName, this.audioContext.currentTime, {
+            gain: instr1.gain * volumePct,
+          });
           break;
         case 2:
-          instr2.play(
-            event.noteName,
-            this.audioContext.currentTime,
-            { gain: instr2.gain * volumePct },
-          );
+          instr2.play(event.noteName, this.audioContext.currentTime, {
+            gain: instr2.gain * volumePct,
+          });
           break;
         case 3:
-          instr3.play(
-            event.noteName,
-            this.audioContext.currentTime,
-            { gain: instr3.gain * volumePct },
-          );
+          instr3.play(event.noteName, this.audioContext.currentTime, {
+            gain: instr3.gain * volumePct,
+          });
           break;
         default:
-            // nothing!
+        // nothing!
       }
     }
 
@@ -133,7 +127,7 @@ class MidiPlayerLegacy {
           instr3.stop();
           break;
         default:
-          // nothing!
+        // nothing!
       }
     }
 
@@ -143,47 +137,53 @@ class MidiPlayerLegacy {
   }
 
   /**
-    * Completes the loading of this class. The "midiPlayerReady" eve
-    * @private
-    * @emits {statusUpdate} - Emits this event when the audio player successfully loads
-    */
+   * Completes the loading of this class. The "midiPlayerReady" eve
+   * @private
+   * @emits {statusUpdate} - Emits this event when the audio player successfully loads
+   */
   _finishLoad() {
     const haxThis = this;
-    this.player = new GMidiPlayer.Player(((event) => {
+    this.player = new GMidiPlayer.Player((event) => {
       haxThis._midiCallback(event);
-    }));
+    });
     this.initialized = true;
     this.playbackLocked = false;
 
-    const updateEvent = new CustomEvent('statusUpdate', { detail: 'MIDI player is loaded!' });
+    const updateEvent = new CustomEvent('statusUpdate', {
+      detail: 'MIDI player is loaded!',
+    });
     document.body.dispatchEvent(updateEvent);
   }
 
   /**
-    * Plays the given melody.
-    * @param {string[]} melodySolo - solo melody (violin)
-    */
+   * Plays the given melody.
+   * @param {string[]} melodySolo - solo melody (violin)
+   */
   playMelodySolo(melodySolo) {
     const strMidi = AcMidiWriter.buildMelodyMidi(melodySolo);
     this._playMelody(strMidi);
   }
 
   /**
-    * Plays the given melodies.
-    * @param {string[]} melodySolo - solo melody (violin)
-    * @param {string[]} melodyAccomp - accompaniment melody (piano)
-    * @param {string[]} melodyBass - bass melody (bass)
-    */
+   * Plays the given melodies.
+   * @param {string[]} melodySolo - solo melody (violin)
+   * @param {string[]} melodyAccomp - accompaniment melody (piano)
+   * @param {string[]} melodyBass - bass melody (bass)
+   */
   playMelodyWithAccompaniment(melodySolo, melodyAccomp, melodyBass) {
-    const strMidi = AcMidiWriter.buildMelodyMidiWithAccompaniment(melodySolo, melodyAccomp, melodyBass);
+    const strMidi = AcMidiWriter.buildMelodyMidiWithAccompaniment(
+      melodySolo,
+      melodyAccomp,
+      melodyBass,
+    );
     this._playMelody(strMidi);
   }
 
   /**
-    * Actually plays the given melody
-    * @private
-    * @param {string} strMidi - MIDI data, as a DataURI string.
-    */
+   * Actually plays the given melody
+   * @private
+   * @param {string} strMidi - MIDI data, as a DataURI string.
+   */
   _playMelody(strMidi) {
     if (this.initialized) {
       this.stopPlayback();
@@ -197,8 +197,8 @@ class MidiPlayerLegacy {
   }
 
   /**
-    * Stops all playback
-    */
+   * Stops all playback
+   */
   stopPlayback() {
     this.instruments.melody.stop();
     this.instruments.accompaniment.stop();
@@ -207,16 +207,16 @@ class MidiPlayerLegacy {
   }
 
   /**
-    * Sets tempo for player
-    */
+   * Sets tempo for player
+   */
   setTempo(tempoInput) {
     this.tempo = tempoInput;
     this.player.setTempo(tempoInput);
   }
 
   /**
-    * Sets volume for player
-    */
+   * Sets volume for player
+   */
   setVolume(volumeInput) {
     this.volume = volumeInput;
   }

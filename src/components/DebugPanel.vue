@@ -16,57 +16,57 @@
 <script>
 import Button from './Button.vue';
 import EventBus from '../eventBus';
-import Sketch from '../enities/sketch';
+import Sketch from '../entities/sketch';
 // import MidiPlayer from '../utils/midiPlayer';
 
 function buildTestSketch() {
-  const testSketch = newSketch();
+  const testSketch = new Sketch();
 
   testSketch.melody = [
     {
-      pitch: "C4",
+      pitch: 'C4',
       duration: 5,
-      harmonicContext: "do"
+      harmonicContext: 'do',
     },
     {
-      pitch: "C4",
+      pitch: 'C4',
       duration: 3,
-      harmonicContext: "do"
+      harmonicContext: 'do',
     },
     {
-      pitch: "C4",
+      pitch: 'C4',
       duration: 4,
-      harmonicContext: "do"
+      harmonicContext: 'do',
     },
     {
-      pitch: "C4",
+      pitch: 'C4',
       duration: 10,
-      harmonicContext: "do"
+      harmonicContext: 'do',
     },
     {
-      pitch: "C4",
+      pitch: 'C4',
       duration: 10,
-      harmonicContext: "do"
-    }
+      harmonicContext: 'do',
+    },
   ];
 
   testSketch.chords = [
     {
-      name: "EMaj7",
+      name: 'EMaj7',
       duration: 12,
-      harmonicContext: "I"
+      harmonicContext: 'I',
     },
     {
-      name: "B7",
+      name: 'B7',
       duration: 10,
-      harmonicContext: "V"
+      harmonicContext: 'V',
     },
     {
-      name: "B7",
+      name: 'B7',
       duration: 10,
-      harmonicContext: "V"
-    }
-  ],
+      harmonicContext: 'V',
+    },
+  ];
 
   return testSketch;
 }
@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     handleNewPlayerTestSolo() {
-      testSketch = buildTestSketch();
+      const testSketch = buildTestSketch();
 
       // eslint-disable-next-line
       console.debug('DebugPanel.handleNewPlayerTestSolo()');
