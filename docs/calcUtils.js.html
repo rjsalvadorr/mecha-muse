@@ -30,23 +30,23 @@
  * Utility functions for numerical/math calculations
  */
 class CalcUtils {
-    /**
-     * Returns the sum of an integer array's values
-     * @static
-     * @param {number[]} integerArray - array of integers
-     * @returns {number} sum of integerArray's values
-     */
+  /**
+   * Returns the sum of an integer array's values
+   * @static
+   * @param {number[]} integerArray - array of integers
+   * @returns {number} sum of integerArray's values
+   */
   static getIntArraySum(integerArray) {
     return integerArray.reduce((a, b) => a + b, 0);
   }
 
-    /**
-     * Returns a random integer between the two given numbers
-     * @static
-     * @param {number} minimum - minimum number (inclusive)
-     * @param {number} maximum - maximum number (exclusive)
-     * @returns {number} random integer between the two parameters
-     */
+  /**
+   * Returns a random integer between the two given numbers
+   * @static
+   * @param {number} minimum - minimum number (inclusive)
+   * @param {number} maximum - maximum number (exclusive)
+   * @returns {number} random integer between the two parameters
+   */
   static getRandomInt(minimum, maximum) {
     const min = Math.ceil(minimum);
     const max = Math.floor(maximum);
@@ -54,21 +54,21 @@ class CalcUtils {
     // The maximum is exclusive and the minimum is inclusive
   }
 
-    /**
-     * Splits an integer into several random parts
-     * @static
-     * @param {number} numToSplit - integer to split
-     * @param {number} numSections - # of sections
-     * @returns {number[]} addends
-     */
+  /**
+   * Splits an integer into several random parts
+   * @static
+   * @param {number} numToSplit - integer to split
+   * @param {number} numSections - # of sections
+   * @returns {number[]} addends
+   */
   static splitInteger(numToSplit, numSections) {
-    if(numSections >= numToSplit) {
-      let errorMsg = "# of sections must be smaller than # to split!";
+    if (numSections >= numToSplit) {
+      let errorMsg = '# of sections must be smaller than # to split!';
       errorMsg += ` (${numToSplit}, ${numSections})`;
-      throw errorMsg;
+      throw Error(errorMsg);
     }
-    if(numSections &lt;= 0 || numToSplit &lt;= 0) {
-      throw "# of sections and # to split must be larger than 0!";
+    if (numSections &lt;= 0 || numToSplit &lt;= 0) {
+      throw Error('# of sections and # to split must be larger than 0!');
     }
 
     const splitValues = [];
@@ -83,26 +83,26 @@ class CalcUtils {
     return splitValues;
   }
 
-    /**
-     * Splits an integer array into more parts
-     * @static
-     * @param {number} arrayToSplit - integer array to split
-     * @param {number} numSections - # of sections
-     * @returns {number[]} larger integer array
-     */
+  /**
+   * Splits an integer array into more parts
+   * @static
+   * @param {number} arrayToSplit - integer array to split
+   * @param {number} numSections - # of sections
+   * @returns {number[]} larger integer array
+   */
   static splitIntegerArray(arrayToSplit, numSections) {
-    if(!numSections || numSections &lt;= 0) {
-      throw "# to split must be larger than 0!";
+    if (!numSections || numSections &lt;= 0) {
+      throw Error('# to split must be larger than 0!');
     }
-    if(!arrayToSplit || arrayToSplit.length === 0) {
-      throw "arrayToSplit must have values!";
+    if (!arrayToSplit || arrayToSplit.length === 0) {
+      throw Error('arrayToSplit must have values!');
     }
-    if(numSections &lt;= arrayToSplit.length) {
-      throw "# of sections must be larger than array length!";
+    if (numSections &lt;= arrayToSplit.length) {
+      throw Error('# of sections must be larger than array length!');
     }
     const arrayTotal = this.getIntArraySum(arrayToSplit);
-    if(arrayTotal &lt;= numSections) {
-      throw "Integer array total must be larger than number of sections!";
+    if (arrayTotal &lt;= numSections) {
+      throw Error('Integer array total must be larger than number of sections!');
     }
 
     const numSplits = numSections - arrayToSplit.length;
@@ -113,24 +113,37 @@ class CalcUtils {
     let elementToSplit;
     let splitVals;
 
-    for(let i = 0; i &lt; numSplits; i++) {
+    for (let i = 0; i &lt; numSplits; i++) {
       randomIndex = this.getRandomInt(0, currentArray.length);
       arraySlice1 = currentArray.slice(0, randomIndex + 1);
       arraySlice2 = currentArray.slice(randomIndex + 1, currentArray.length);
       elementToSplit = arraySlice1.pop();
-      if(elementToSplit &lt;= 2) {
+      if (elementToSplit &lt;= 2) {
         // we want to skip this iteration of the loop,
         // and make the loop go for another time.
-        i = i -1;
-        continue
+        i -= 1;
+        continue;
       }
       splitVals = this.splitInteger(elementToSplit, 2);
       arraySlice1.push(splitVals[0]);
       arraySlice1.push(splitVals[1]);
       currentArray = arraySlice1.concat(arraySlice2);
     }
-    
+
     return currentArray;
+  }
+
+  /**
+   * Prints variables to the console.
+   * @static
+   * @param {Object[]}} nameValuePairs - name/value of variable to print
+   */
+  static printVariables(nameValuePairs) {
+    let msg = '';
+    for (const nameValuePair of nameValuePairs) {
+      msg += `${nameValuePair.name} = ${JSON.stringify(nameValuePair.value, null, 2)}\n`;
+    }
+    console.log(msg);
   }
 }
 
@@ -145,13 +158,13 @@ export default CalcUtils;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiWriter.html">MidiWriter</a></li><li><a href="SketchBuilder.html">SketchBuilder</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiPlayerLegacy.html">MidiPlayerLegacy</a></li><li><a href="MidiWriter.html">MidiWriter</a></li><li><a href="SketchBuilder.html">SketchBuilder</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 27 2019 12:29:42 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 10 2019 22:46:09 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

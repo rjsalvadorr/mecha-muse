@@ -1,6 +1,7 @@
 import GMidiWriter from 'midi-writer-js';
 import { Note as tonalNote } from 'tonal';
 import AcConstants from './constants';
+import CalcUtils from './calcUtils';
 
 const INSTRUMENT_DATA = AcConstants.instrumentData;
 
@@ -15,7 +16,7 @@ class MidiWriter {
    * @param {number[]} arrNumMidi - MIDI numbers for a set of pitches
    * @param {number} duration - MIDI number for a pitch
    * @param {number} wait
-   * @return {MidiWriter.NoteEvent} - ???
+   * @return {MidiWriter.NoteEvent} ???
    */
   _buildMidi(arrNumMidi, duration, wait) {
     let waitTime = wait;
@@ -33,13 +34,11 @@ class MidiWriter {
   /**
    * Builds a Track from a given chord.
    * @private
-   * @param {string[]} arrChordNotes - chordNotes
+   * @param {Object[]} mmNotes - mmNotes or chords
    * @param {Object} instrData - instrument data for track
-   * @return {Track} - a MidiWriter Track
+   * @return {Track} a MidiWriter Track
    */
-  _buildTrack(arrChordNotes, instrData) {
-    let notes;
-    let midiNumbers;
+  _buildTrack(mmNotes, instrData) {
     const returnTrack = new GMidiWriter.Track();
     returnTrack.addEvent(
       new GMidiWriter.ProgramChangeEvent({
@@ -47,17 +46,23 @@ class MidiWriter {
       }),
     );
     returnTrack.addInstrumentName(instrData.name);
-
-    for (let i = 0; i < arrChordNotes.length; i++) {
+    
+    let notes;
+    let midiNumbers;
+    let currentNoteOrChord;
+    for (let i = 0; i < mmNotes.length; i++) {
+      currentNoteOrChord = mmNotes[i];
       midiNumbers = [];
-      notes = arrChordNotes[i].split(' ');
-
-      for (let j = 0; j < notes.length; j++) {
-        const note = notes[j];
-        midiNumbers.push(tonalNote.midi(note));
+      if(currentNoteOrChord.hasOwnProperty('pitches')) {
+        for(let pitch of currentNoteOrChord.pitches) {
+          midiNumbers.push(tonalNote.midi(pitch));
+        }
+      } else {
+        midiNumbers.push(tonalNote.midi(currentNoteOrChord.pitch));
       }
-
-      returnTrack.addEvent(this._buildMidi(midiNumbers, AcConstants.DEFAULT_NOTE_DURATION));
+      const duration = CalcUtils.convertDuration(currentNoteOrChord.duration);
+      const newMidiEvt = this._buildMidi(midiNumbers, duration);
+      returnTrack.addEvent(newMidiEvt);
     }
 
     return returnTrack;
@@ -65,8 +70,8 @@ class MidiWriter {
 
   /**
    * Gets the MIDI data for a given melody.
-   * @param {string[]} arrMelody - our melody
-   * @return {string} - MIDI data, as a DataURI string
+   * @param {Object[]} arrMelody - our melody
+   * @return {string} MIDI data, as a DataURI string
    */
   buildMelodyMidi(arrMelody) {
     const tracks = [];
@@ -82,7 +87,7 @@ class MidiWriter {
    * @param {string[]} arrMelody - main melody
    * @param {string[]} arrAcompanimentLine - accompaniment line
    * @param {string[]} arrBassLine - bass line
-   * @return {string} - MIDI data, as a DataURI string.
+   * @return {string} MIDI data, as a DataURI string.
    */
   buildMelodyMidiWithAccompaniment(arrMelody, arrAcompanimentLine, arrBassLine) {
     const melodyTrack = this._buildTrack(arrMelody, INSTRUMENT_DATA.melody);

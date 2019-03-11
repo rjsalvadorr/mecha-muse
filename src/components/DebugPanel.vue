@@ -24,29 +24,47 @@ function buildTestSketch() {
 
   testSketch.melody = [
     {
-      pitch: 'C4',
+      pitch: 'E4',
       duration: 5,
       harmonicContext: 'do',
     },
     {
-      pitch: 'C4',
+      pitch: 'G#4',
       duration: 3,
       harmonicContext: 'do',
     },
     {
-      pitch: 'C4',
+      pitch: 'B4',
       duration: 4,
       harmonicContext: 'do',
     },
     {
-      pitch: 'C4',
+      pitch: 'C#4',
       duration: 10,
       harmonicContext: 'do',
     },
     {
-      pitch: 'C4',
+      pitch: 'B4',
       duration: 10,
       harmonicContext: 'do',
+    },
+  ];
+
+  testSketch.accompaniment = [
+    {
+      pitches: ['E3', 'G#3', 'D#3'],
+      duration: 12,
+      harmonicContext: 'I',
+    },
+    {
+      pitches: ['A3', 'C#3', 'G#3'],
+      duration: 10,
+      harmonicContext: 'IV',
+    },
+    {
+      pitches: ['B3', 'D#3', 'A3'],
+      duration: 10,
+      harmonicContext: 'V',
     },
   ];
 
@@ -57,14 +75,32 @@ function buildTestSketch() {
       harmonicContext: 'I',
     },
     {
-      name: 'B7',
+      name: 'AMaj7',
       duration: 10,
-      harmonicContext: 'V',
+      harmonicContext: 'IV',
     },
     {
       name: 'B7',
       duration: 10,
       harmonicContext: 'V',
+    },
+  ];
+
+  testSketch.bassline = [
+    {
+      pitch: 'E1',
+      duration: 12,
+      harmonicContext: 'do',
+    },
+    {
+      pitch: 'A1',
+      duration: 10,
+      harmonicContext: 'fa',
+    },
+    {
+      pitch: 'B1',
+      duration: 10,
+      harmonicContext: 'sol',
     },
   ];
 

@@ -63,7 +63,7 @@ export default {
       MidiPlayer.playMelodyWithAccompaniment(
         payload.melody,
         payload.accompaniment,
-        payload.bassline,
+        payload.bass,
       );
     });
     EventBus.$on('PLAY_MELODY_SOLO', () => {

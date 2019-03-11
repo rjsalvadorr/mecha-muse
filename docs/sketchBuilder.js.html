@@ -29,8 +29,8 @@
             <pre class="prettyprint source linenums"><code>import shuffle from 'lodash/shuffle';
 import map from 'lodash/map';
 
-import * as Key from "tonal-key"
-import * as RomanNumeral from "tonal-roman-numeral"
+import * as Key from 'tonal-key';
+import * as RomanNumeral from 'tonal-roman-numeral';
 
 import Note from '../entities/note';
 import Chord from '../entities/chord';
@@ -42,32 +42,51 @@ import CalcUtils from './calcUtils';
  */
 class SketchBuilder {
   /**
-     * Builds randomly-generated music sketches
-     * @static
-     * @param {string} thing - thing
-     * @param {number} numSketches - thing
-     * @returns array of sketches
-     */
+   * Builds randomly-generated music sketches
+   * @static
+   * @param {string} key - musical key
+   * @param {number} numSketches - number of sketches to return
+   * @param {number} numMeasures - number of measures for each sketch
+   * @returns array of sketches
+   */
   static buildSketches(key, numSketches, numMeasures) {
     const beatUnitsPerMeasure = 16; // Using 16th notes in 4/4 for now
     const measures = numMeasures || 2;
     const beatUnits = measures * beatUnitsPerMeasure;
 
-    const sketch = new Sketch();
-    sketch.chords = this.buildChords;
-    return sketch;
+    CalcUtils.printVariables([
+      { name: 'key', value: key },
+      { name: 'measures', value: measures },
+      { name: 'beatUnits', value: beatUnits },
+    ]);
+
+    const sketches = [];
+    let sketch;
+    for (let i = 0; i &lt; numSketches; i++) {
+      sketch = new Sketch();
+      sketch.chords = this.buildChords(
+        key,
+        measures,
+        beatUnits,
+        2, // shortestChordDuration
+      );
+      sketch.melody = this.buildMelody(key, sketch.chords);
+      sketches.push(sketch);
+    }
+
+    return sketches;
   }
 
   /**
-     * Builds chord progressions
-     * @static
-     * @private
-     * @param {string} key - musical key, like "A major"
-     * @param {string} numMeasures - duration of music, in measures
-     * @param {string} beatUnits - total beat units
-     * @param {string} shortestChordDuration - shortest chord duration (in beat units)
-     * @returns array of chords
-     */
+   * Builds chord progressions
+   * @static
+   * @private
+   * @param {string} key - musical key, like "A major"
+   * @param {string} numMeasures - duration of music, in measures
+   * @param {string} beatUnits - total beat units
+   * @param {string} shortestChordDuration - shortest chord duration (in beat units)
+   * @returns array of chords
+   */
   static buildChords(key, numMeasures, beatUnits, shortestChordDuration = 1) {
     // we can use this shortestChordDuration for changing harmonic rhythm
     // 1 = 16th notes
@@ -76,24 +95,24 @@ class SketchBuilder {
     const calcBeatUnits = beatUnits / shortestChordDuration;
     const chordsUpperBound = Math.floor(numMeasures * 1.5) + 1;
     const numChords = CalcUtils.getRandomInt(numMeasures, chordsUpperBound);
-    const durations = CalcUtils.splitInteger(beatUnits, numChords);
+    const durations = CalcUtils.splitInteger(calcBeatUnits, numChords);
     const chords = [];
     const availableChords = [1, 4, 5];
     const chordDegrees = [1];
 
     let randomChordNum;
-    for(let i = 1; i &lt; numChords; i++) {
+    for (let i = 1; i &lt; numChords; i++) {
       randomChordNum = shuffle(availableChords)[0];
-      chordDegrees.push(randomChordNum)
+      chordDegrees.push(randomChordNum);
     }
 
     let randomChord;
     let harmonicContext;
     let recalcDuration;
-    for(let j = 0; j &lt; numChords; j++) {
+    for (let j = 0; j &lt; numChords; j++) {
       randomChord = Key.chords(key, [chordDegrees[j]]);
       harmonicContext = RomanNumeral.fromDegree(chordDegrees[j], key.includes('major'));
-      recalcDuration = durations[j] * shortestChordDuration
+      recalcDuration = durations[j] * shortestChordDuration;
       chords.push(new Chord(randomChord[0], recalcDuration, harmonicContext));
     }
 
@@ -101,22 +120,20 @@ class SketchBuilder {
   }
 
   /**
-     * Builds melodies
-     * @static
-     * @private
-     * @param {string} key - key
-     * @param {string} chords - chord progression, from buildChords()
-     * @returns array of notes
-     */
+   * Builds melodies
+   * @static
+   * @private
+   * @param {string} key - key
+   * @param {string} chords - chord progression, from buildChords()
+   * @returns array of notes
+   */
   static buildMelody(key, chords) {
-    const chordDurations = map(chords, (chord) => {
-      return chord.duration;
-    });
+    const chordDurations = map(chords, chord => chord.duration);
     const numNotes = Math.floor(chords.length * 1.5) + 1;
     const noteDurations = CalcUtils.splitIntegerArray(chordDurations, numNotes);
     const melodyNotes = [];
-    
-    for(let noteDuration of noteDurations) {
+
+    for (const noteDuration of noteDurations) {
       melodyNotes.push(new Note('C4', noteDuration, 'do'));
     }
 
@@ -124,26 +141,32 @@ class SketchBuilder {
   }
 
   /**
-     * Things
-     * @static
-     * @private
-     * @param {string} thing - thing
-     * @returns array of chords
-     */
+   * Things
+   * @static
+   * @private
+   * @param {string} thing - thing
+   * @returns array of chords
+   */
   static buildAccompaniment(key, chords) {
     const dummySketch = new Sketch();
+
+    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
+
     return dummySketch;
   }
 
   /**
-     * Things
-     * @static
-     * @private
-     * @param {string} thing - thing
-     * @returns array of chords
-     */
+   * Things
+   * @static
+   * @private
+   * @param {string} thing - thing
+   * @returns array of chords
+   */
   static buildBassline(key, chords) {
     const dummySketch = new Sketch();
+
+    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
+
     return dummySketch;
   }
 }
@@ -159,13 +182,13 @@ export default SketchBuilder;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiWriter.html">MidiWriter</a></li><li><a href="SketchBuilder.html">SketchBuilder</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiPlayerLegacy.html">MidiPlayerLegacy</a></li><li><a href="MidiWriter.html">MidiWriter</a></li><li><a href="SketchBuilder.html">SketchBuilder</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 27 2019 12:29:42 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 10 2019 22:46:09 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

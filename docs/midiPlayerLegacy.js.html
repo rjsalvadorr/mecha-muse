@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: midiPlayer.js</title>
+    <title>JSDoc: Source: midiPlayerLegacy.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: midiPlayer.js</h1>
+    <h1 class="page-title">Source: midiPlayerLegacy.js</h1>
 
     
 
@@ -39,10 +39,10 @@ const GMidiPlayer = midiPlayer || {};
 const tonalNote = Note || {};
 
 /**
- * Submodule responsible for playing audio on the browser.
+ * Deprecated submodule responsible for playing audio on the browser.
  * @emits {statusUpdate} - Emits this event when the audio player loads.
  */
-class MidiPlayer {
+class MidiPlayerLegacy {
   constructor() {
     this.instruments = {};
     this.numInstrumentsInit = 0;
@@ -250,7 +250,7 @@ class MidiPlayer {
   }
 }
 
-export default new MidiPlayer();
+export default new MidiPlayerLegacy();
 </code></pre>
         </article>
     </section>
