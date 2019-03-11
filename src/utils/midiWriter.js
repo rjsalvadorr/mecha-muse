@@ -46,15 +46,14 @@ class MidiWriter {
       }),
     );
     returnTrack.addInstrumentName(instrData.name);
-    
-    let notes;
+
     let midiNumbers;
     let currentNoteOrChord;
     for (let i = 0; i < mmNotes.length; i++) {
       currentNoteOrChord = mmNotes[i];
       midiNumbers = [];
-      if(currentNoteOrChord.hasOwnProperty('pitches')) {
-        for(let pitch of currentNoteOrChord.pitches) {
+      if (currentNoteOrChord.pitches && currentNoteOrChord.pitches.length > 0) {
+        for (const pitch of currentNoteOrChord.pitches) {
           midiNumbers.push(tonalNote.midi(pitch));
         }
       } else {

@@ -11,7 +11,7 @@
   },
   "scripts": {
     "serve": "vue-cli-service lint && vue-cli-service serve",
-    "build": "vue-cli-service lint && vue-cli-service build",
+    "build": "yarn lint && vue-cli-service build && yarn build-docs",
     "start": "yarn serve",
     "prettier": "prettier --write \"src/**/*.js\"",
     "lint": "yarn prettier && vue-cli-service lint",

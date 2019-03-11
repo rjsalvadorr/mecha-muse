@@ -126,7 +126,7 @@ class CalcUtils {
    */
   static convertDuration(duration) {
     const outDuration = [];
-    for(let i = 0; i < duration; i++) {
+    for (let i = 0; i < duration; i++) {
       outDuration.push('16');
     }
     return outDuration;
