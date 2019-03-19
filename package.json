@@ -25,6 +25,7 @@
     "midi-writer-js": "^1.7.0",
     "soundfont-player": "^0.11.0",
     "tonal": "^2.1.2",
+    "tonal-chord": "^2.2.1",
     "tonal-note": "^2.2.1",
     "vue": "^2.5.17",
     "vue-material": "^1.0.0-beta-10.2",

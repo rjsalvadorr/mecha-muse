@@ -6,13 +6,14 @@
       :key="item.id"
     >
       <span class="playlist-item__label">{{ item.name }}</span>
-      <div v-if="item.id === selectedItem.id" class="playlist-item__highlight" />
+      <div v-if="selectedItem && item.id === selectedItem.id" class="playlist-item__highlight" />
     </div>
   </div>
 </template>
 
 <script>
 import EventBus from '../eventBus';
+import TestUtils from '../utils/testUtils';
 
 export default {
   name: 'PlaylistDisplay',
@@ -21,35 +22,13 @@ export default {
   },
   data() {
     return {
-      selectedItem: {
-        id: 1,
-        name: 'test one',
-        melody: ['Bb4', 'B4', 'C5', 'D5'],
-        accompaniment: ['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2'],
-        bassline: ['G1', 'E1', 'C2', 'D2'],
-      },
+      selectedItem: null,
       playlistItems: [
-        {
-          id: 1,
-          name: 'test one',
-          melody: ['Bb4', 'B4', 'C5', 'D5'],
-          accompaniment: ['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2'],
-          bassline: ['G1', 'E1', 'C2', 'D2'],
-        },
-        {
-          id: 2,
-          name: 'test two',
-          melody: ['D5', 'Bb4', 'B4', 'C5'],
-          accompaniment: ['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2'],
-          bassline: ['G1', 'E1', 'C2', 'D2'],
-        },
-        {
-          id: 3,
-          name: 'test three',
-          melody: ['C5', 'D5', 'Bb4', 'B4'],
-          accompaniment: ['G2 D3', 'E3 Ab2', 'E3 G2', 'Gb2 A2'],
-          bassline: ['G1', 'E1', 'C2', 'D2'],
-        },
+        TestUtils.buildTestSketch(),
+        TestUtils.buildTestSketch(),
+        TestUtils.buildTestSketch(),
+        TestUtils.buildTestSketch(),
+        TestUtils.buildTestSketch(),
       ],
     };
   },

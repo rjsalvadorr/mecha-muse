@@ -2,12 +2,14 @@ import shuffle from 'lodash/shuffle';
 import map from 'lodash/map';
 
 import * as Key from 'tonal-key';
+import * as Chord from 'tonal-chord';
 import * as RomanNumeral from 'tonal-roman-numeral';
 
 import Note from '../entities/note';
-import Chord from '../entities/chord';
+import mmChord from '../entities/chord';
 import Sketch from '../entities/sketch';
 import CalcUtils from './calcUtils';
+import TestUtils from "./testUtils";
 
 /**
  * Builds mecha-muse sketches
@@ -26,7 +28,7 @@ class SketchBuilder {
     const measures = numMeasures || 2;
     const beatUnits = measures * beatUnitsPerMeasure;
 
-    CalcUtils.printVariables([
+    TestUtils.printVariables([
       { name: 'key', value: key },
       { name: 'measures', value: measures },
       { name: 'beatUnits', value: beatUnits },
@@ -43,6 +45,7 @@ class SketchBuilder {
         2, // shortestChordDuration
       );
       sketch.melody = this.buildMelody(key, sketch.chords);
+      sketch.bassline = this.buildBassline(key, sketch.chords);
       sketches.push(sketch);
     }
 
@@ -85,7 +88,7 @@ class SketchBuilder {
       randomChord = Key.chords(key, [chordDegrees[j]]);
       harmonicContext = RomanNumeral.fromDegree(chordDegrees[j], key.includes('major'));
       recalcDuration = durations[j] * shortestChordDuration;
-      chords.push(new Chord(randomChord[0], recalcDuration, harmonicContext));
+      chords.push(new mmChord(randomChord[0], recalcDuration, harmonicContext));
     }
 
     return chords;
@@ -106,7 +109,7 @@ class SketchBuilder {
     const melodyNotes = [];
 
     for (const noteDuration of noteDurations) {
-      melodyNotes.push(new Note('C4', noteDuration, 'do'));
+      melodyNotes.push(new Note('C4', noteDuration, '???'));
     }
 
     return melodyNotes;
@@ -122,24 +125,31 @@ class SketchBuilder {
   static buildAccompaniment(key, chords) {
     const dummySketch = new Sketch();
 
-    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
+    TestUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
 
     return dummySketch;
   }
 
   /**
-   * Things
+   * Builds basslines
    * @static
    * @private
-   * @param {string} thing - thing
-   * @returns array of chords
+   * @param {string} key - key
+   * @param {string} chords - chord progression, from buildChords()
+   * @returns array of notes
    */
   static buildBassline(key, chords) {
-    const dummySketch = new Sketch();
+    const basslineNotes = [];
 
-    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
+    let currentRoot;
+    let newBassNote;
+    for (let chord of chords) {
+      currentRoot = Chord.notes(chord.name)[0];
+      newBassNote = `${currentRoot}1`;
+      basslineNotes.push(new Note(newBassNote, chord.duration, '???'));
+    }
 
-    return dummySketch;
+    return basslineNotes;
   }
 }
 

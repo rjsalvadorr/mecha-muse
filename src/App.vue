@@ -67,11 +67,13 @@ export default {
       );
     });
     EventBus.$on('PLAY_MELODY_SOLO', () => {
+      console.log(this.selectedTrack);
       if (this.selectedTrack.melody) {
         MidiPlayer.playMelodySolo(this.selectedTrack.melody);
       }
     });
     EventBus.$on('CLICK_PLAY', () => {
+      console.log(this.selectedTrack);
       if (this.selectedTrack.melody) {
         MidiPlayer.playMelodyWithAccompaniment(
           this.selectedTrack.melody,

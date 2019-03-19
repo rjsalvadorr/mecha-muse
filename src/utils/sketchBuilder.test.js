@@ -1,5 +1,6 @@
 import SketchBuilder from "./sketchBuilder";
 import CalcUtils from "./calcUtils";
+import TestUtils from "./testUtils";
 
 const numChords = 2;
 const shortestChordDuration = 2;
@@ -59,7 +60,7 @@ test("builds melodies", () => {
 
 test("builds sketches", () => {
   for (const result of generatedSketches) {
-    CalcUtils.printVariables([{ name: "sketch", value: result }]);
+    TestUtils.printVariables([{ name: "sketch", value: result }]);
     expect(result).toBeTruthy();
   }
 });
