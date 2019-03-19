@@ -27,15 +27,18 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import shuffle from 'lodash/shuffle';
+import sample from 'lodash/sample';
 import map from 'lodash/map';
 
 import * as Key from 'tonal-key';
+import * as Chord from 'tonal-chord';
 import * as RomanNumeral from 'tonal-roman-numeral';
 
 import Note from '../entities/note';
-import Chord from '../entities/chord';
+import MmChord from '../entities/chord';
 import Sketch from '../entities/sketch';
 import CalcUtils from './calcUtils';
+import TestUtils from './testUtils';
 
 /**
  * Builds mecha-muse sketches
@@ -54,7 +57,7 @@ class SketchBuilder {
     const measures = numMeasures || 2;
     const beatUnits = measures * beatUnitsPerMeasure;
 
-    CalcUtils.printVariables([
+    TestUtils.printVariables([
       { name: 'key', value: key },
       { name: 'measures', value: measures },
       { name: 'beatUnits', value: beatUnits },
@@ -62,6 +65,7 @@ class SketchBuilder {
 
     const sketches = [];
     let sketch;
+
     for (let i = 0; i &lt; numSketches; i++) {
       sketch = new Sketch();
       sketch.chords = this.buildChords(
@@ -71,6 +75,11 @@ class SketchBuilder {
         2, // shortestChordDuration
       );
       sketch.melody = this.buildMelody(key, sketch.chords);
+      sketch.accompaniment = this.buildAccompaniment(key, sketch.chords);
+      sketch.bassline = this.buildBassline(key, sketch.chords);
+
+      sketch.id = CalcUtils.getRandomInt(1, 65535);
+      sketch.name = `test-${sketch.id}-${CalcUtils.getRandomInt(1, 65535)}`;
       sketches.push(sketch);
     }
 
@@ -113,7 +122,7 @@ class SketchBuilder {
       randomChord = Key.chords(key, [chordDegrees[j]]);
       harmonicContext = RomanNumeral.fromDegree(chordDegrees[j], key.includes('major'));
       recalcDuration = durations[j] * shortestChordDuration;
-      chords.push(new Chord(randomChord[0], recalcDuration, harmonicContext));
+      chords.push(new MmChord(randomChord[0], recalcDuration, harmonicContext));
     }
 
     return chords;
@@ -133,8 +142,23 @@ class SketchBuilder {
     const noteDurations = CalcUtils.splitIntegerArray(chordDurations, numNotes);
     const melodyNotes = [];
 
+    let durationCounter = 0;
+    let calcCounter;
+    let currentChord;
+    let newNote;
     for (const noteDuration of noteDurations) {
-      melodyNotes.push(new Note('C4', noteDuration, 'do'));
+      calcCounter = 0;
+      for (const chord of chords) {
+        if (durationCounter &lt;= calcCounter) {
+          currentChord = chord;
+        }
+        calcCounter += chord.duration;
+      }
+      newNote = `${sample(Chord.notes(currentChord.name))}4`;
+
+      melodyNotes.push(new Note(newNote, noteDuration, '???'));
+
+      durationCounter += noteDuration;
     }
 
     return melodyNotes;
@@ -148,26 +172,39 @@ class SketchBuilder {
    * @returns array of chords
    */
   static buildAccompaniment(key, chords) {
-    const dummySketch = new Sketch();
+    const accompNotes = [];
 
-    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
+    let chordNotes;
+    let newAccompNotes;
+    for (const chord of chords) {
+      chordNotes = Chord.notes(chord.name);
+      newAccompNotes = chordNotes.map(noteName => `${noteName}3`);
+      accompNotes.push(new Note('', chord.duration, '???', newAccompNotes));
+    }
 
-    return dummySketch;
+    return accompNotes;
   }
 
   /**
-   * Things
+   * Builds basslines
    * @static
    * @private
-   * @param {string} thing - thing
-   * @returns array of chords
+   * @param {string} key - key
+   * @param {string} chords - chord progression, from buildChords()
+   * @returns array of notes
    */
   static buildBassline(key, chords) {
-    const dummySketch = new Sketch();
+    const basslineNotes = [];
 
-    CalcUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
+    let currentRoot;
+    let newBassNote;
+    for (const chord of chords) {
+      currentRoot = Chord.notes(chord.name)[0];
+      newBassNote = `${currentRoot}1`;
+      basslineNotes.push(new Note(newBassNote, chord.duration, '???'));
+    }
 
-    return dummySketch;
+    return basslineNotes;
   }
 }
 
@@ -182,13 +219,13 @@ export default SketchBuilder;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiPlayerLegacy.html">MidiPlayerLegacy</a></li><li><a href="MidiWriter.html">MidiWriter</a></li><li><a href="SketchBuilder.html">SketchBuilder</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="CalcUtils.html">CalcUtils</a></li><li><a href="MidiPlayer.html">MidiPlayer</a></li><li><a href="MidiPlayerLegacy.html">MidiPlayerLegacy</a></li><li><a href="MidiWriter.html">MidiWriter</a></li><li><a href="SketchBuilder.html">SketchBuilder</a></li><li><a href="TestUtils.html">TestUtils</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AcConstants">AcConstants</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 10 2019 23:43:55 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Mar 19 2019 17:11:19 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

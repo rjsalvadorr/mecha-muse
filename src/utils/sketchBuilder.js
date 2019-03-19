@@ -7,10 +7,10 @@ import * as Chord from 'tonal-chord';
 import * as RomanNumeral from 'tonal-roman-numeral';
 
 import Note from '../entities/note';
-import mmChord from '../entities/chord';
+import MmChord from '../entities/chord';
 import Sketch from '../entities/sketch';
 import CalcUtils from './calcUtils';
-import TestUtils from "./testUtils";
+import TestUtils from './testUtils';
 
 /**
  * Builds mecha-muse sketches
@@ -94,7 +94,7 @@ class SketchBuilder {
       randomChord = Key.chords(key, [chordDegrees[j]]);
       harmonicContext = RomanNumeral.fromDegree(chordDegrees[j], key.includes('major'));
       recalcDuration = durations[j] * shortestChordDuration;
-      chords.push(new mmChord(randomChord[0], recalcDuration, harmonicContext));
+      chords.push(new MmChord(randomChord[0], recalcDuration, harmonicContext));
     }
 
     return chords;
@@ -118,10 +118,10 @@ class SketchBuilder {
     let calcCounter;
     let currentChord;
     let newNote;
-    for (let noteDuration of noteDurations) {
+    for (const noteDuration of noteDurations) {
       calcCounter = 0;
-      for(let chord of chords) {
-        if(durationCounter <= calcCounter) {
+      for (const chord of chords) {
+        if (durationCounter <= calcCounter) {
           currentChord = chord;
         }
         calcCounter += chord.duration;
@@ -148,7 +148,7 @@ class SketchBuilder {
 
     let chordNotes;
     let newAccompNotes;
-    for (let chord of chords) {
+    for (const chord of chords) {
       chordNotes = Chord.notes(chord.name);
       newAccompNotes = chordNotes.map(noteName => `${noteName}3`);
       accompNotes.push(new Note('', chord.duration, '???', newAccompNotes));
@@ -170,7 +170,7 @@ class SketchBuilder {
 
     let currentRoot;
     let newBassNote;
-    for (let chord of chords) {
+    for (const chord of chords) {
       currentRoot = Chord.notes(chord.name)[0];
       newBassNote = `${currentRoot}1`;
       basslineNotes.push(new Note(newBassNote, chord.duration, '???'));

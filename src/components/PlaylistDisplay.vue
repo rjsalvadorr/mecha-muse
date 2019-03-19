@@ -14,7 +14,7 @@
 <script>
 import EventBus from '../eventBus';
 // import TestUtils from '../utils/testUtils';
-import SketchBuilder from "../utils/sketchBuilder";
+import SketchBuilder from '../utils/sketchBuilder';
 
 export default {
   name: 'PlaylistDisplay',
