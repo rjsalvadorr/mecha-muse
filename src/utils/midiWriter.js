@@ -52,6 +52,7 @@ class MidiWriter {
     for (let i = 0; i < mmNotes.length; i++) {
       currentNoteOrChord = mmNotes[i];
       midiNumbers = [];
+      // if this has a populated pitches array, it's classified as a pitch
       if (currentNoteOrChord.pitches && currentNoteOrChord.pitches.length > 0) {
         for (const pitch of currentNoteOrChord.pitches) {
           midiNumbers.push(tonalNote.midi(pitch));

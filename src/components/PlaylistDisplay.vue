@@ -13,7 +13,8 @@
 
 <script>
 import EventBus from '../eventBus';
-import TestUtils from '../utils/testUtils';
+// import TestUtils from '../utils/testUtils';
+import SketchBuilder from "../utils/sketchBuilder";
 
 export default {
   name: 'PlaylistDisplay',
@@ -23,13 +24,7 @@ export default {
   data() {
     return {
       selectedItem: null,
-      playlistItems: [
-        TestUtils.buildTestSketch(),
-        TestUtils.buildTestSketch(),
-        TestUtils.buildTestSketch(),
-        TestUtils.buildTestSketch(),
-        TestUtils.buildTestSketch(),
-      ],
+      playlistItems: SketchBuilder.buildSketches('C major', 15, 2),
     };
   },
   methods: {

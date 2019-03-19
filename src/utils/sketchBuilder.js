@@ -1,4 +1,5 @@
 import shuffle from 'lodash/shuffle';
+import sample from 'lodash/sample';
 import map from 'lodash/map';
 
 import * as Key from 'tonal-key';
@@ -36,6 +37,7 @@ class SketchBuilder {
 
     const sketches = [];
     let sketch;
+
     for (let i = 0; i < numSketches; i++) {
       sketch = new Sketch();
       sketch.chords = this.buildChords(
@@ -45,7 +47,11 @@ class SketchBuilder {
         2, // shortestChordDuration
       );
       sketch.melody = this.buildMelody(key, sketch.chords);
+      sketch.accompaniment = this.buildAccompaniment(key, sketch.chords);
       sketch.bassline = this.buildBassline(key, sketch.chords);
+
+      sketch.id = CalcUtils.getRandomInt(1, 65535);
+      sketch.name = `test-${sketch.id}-${CalcUtils.getRandomInt(1, 65535)}`;
       sketches.push(sketch);
     }
 
@@ -108,8 +114,23 @@ class SketchBuilder {
     const noteDurations = CalcUtils.splitIntegerArray(chordDurations, numNotes);
     const melodyNotes = [];
 
-    for (const noteDuration of noteDurations) {
-      melodyNotes.push(new Note('C4', noteDuration, '???'));
+    let durationCounter = 0;
+    let calcCounter;
+    let currentChord;
+    let newNote;
+    for (let noteDuration of noteDurations) {
+      calcCounter = 0;
+      for(let chord of chords) {
+        if(durationCounter <= calcCounter) {
+          currentChord = chord;
+        }
+        calcCounter += chord.duration;
+      }
+      newNote = `${sample(Chord.notes(currentChord.name))}4`;
+
+      melodyNotes.push(new Note(newNote, noteDuration, '???'));
+
+      durationCounter += noteDuration;
     }
 
     return melodyNotes;
@@ -123,11 +144,17 @@ class SketchBuilder {
    * @returns array of chords
    */
   static buildAccompaniment(key, chords) {
-    const dummySketch = new Sketch();
+    const accompNotes = [];
 
-    TestUtils.printVariables([{ name: 'key', value: key }, { name: 'chords', value: chords }]);
+    let chordNotes;
+    let newAccompNotes;
+    for (let chord of chords) {
+      chordNotes = Chord.notes(chord.name);
+      newAccompNotes = chordNotes.map(noteName => `${noteName}3`);
+      accompNotes.push(new Note('', chord.duration, '???', newAccompNotes));
+    }
 
-    return dummySketch;
+    return accompNotes;
   }
 
   /**

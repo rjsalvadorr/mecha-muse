@@ -18,7 +18,7 @@ class TestUtils {
   }
 
   /**
-   * Prints variables to the console.
+   * Builds test sketches for the UI
    * @static
    */
   static buildTestSketch() {
@@ -30,55 +30,106 @@ class TestUtils {
       melody: [
         {
           pitch: 'C4',
-          duration: 15,
+          duration: 6,
           harmonicContext: '???',
-          pitches: []
+          pitches: [],
         },
         {
           pitch: 'C4',
-          duration: 11,
+          duration: 6,
           harmonicContext: '???',
-          pitches: []
+          pitches: [],
         },
         {
           pitch: 'C4',
-          duration: 2,
+          duration: 1,
           harmonicContext: '???',
-          pitches: []
+          pitches: [],
         },
         {
           pitch: 'C4',
-          duration: 4,
+          duration: 3,
           harmonicContext: '???',
-          pitches: []
-        }
+          pitches: [],
+        },
+        {
+          pitch: 'C4',
+          duration: 16,
+          harmonicContext: '???',
+          pitches: [],
+        },
       ],
-      accompaniment: [],
+      accompaniment: [
+        {
+          pitch: '',
+          duration: 6,
+          harmonicContext: '???',
+          pitches: [
+            'E3',
+            'G3',
+            'B3',
+            'D3',
+          ],
+        },
+        {
+          pitch: '',
+          duration: 6,
+          harmonicContext: '???',
+          pitches: [
+            'B3',
+            'D3',
+            'F#3',
+            'A3',
+          ],
+        },
+        {
+          pitch: '',
+          duration: 20,
+          harmonicContext: '???',
+          pitches: [
+            'A3',
+            'C3',
+            'E3',
+            'G3',
+          ],
+        },
+      ],
       bassline: [
         {
           pitch: 'E1',
-          duration: 26,
+          duration: 6,
           harmonicContext: '???',
-          pitches: []
+          pitches: [],
         },
         {
           pitch: 'B1',
           duration: 6,
           harmonicContext: '???',
-          pitches: []
-        }
+          pitches: [],
+        },
+        {
+          pitch: 'A1',
+          duration: 20,
+          harmonicContext: '???',
+          pitches: [],
+        },
       ],
       chords: [
         {
           name: 'Em7',
-          duration: 26,
-          harmonicContext: 'i'
+          duration: 6,
+          harmonicContext: 'i',
         },
         {
           name: 'Bm7',
           duration: 6,
-          harmonicContext: 'v'
-        }
+          harmonicContext: 'v',
+        },
+        {
+          name: 'Am7',
+          duration: 20,
+          harmonicContext: 'iv',
+        },
       ],
       key: '',
       tags: [],
