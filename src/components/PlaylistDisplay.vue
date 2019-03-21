@@ -12,8 +12,8 @@
 </template>
 
 <script>
+import sample from 'lodash/sample';
 import EventBus from '../eventBus';
-// import TestUtils from '../utils/testUtils';
 import SketchBuilder from '../utils/sketchBuilder';
 
 export default {
@@ -22,9 +22,10 @@ export default {
     minimized: Boolean,
   },
   data() {
+    const availableKeys = ['C major', 'A minor'];
     return {
       selectedItem: null,
-      playlistItems: SketchBuilder.buildSketches('C major', 15, 2),
+      playlistItems: SketchBuilder.buildSketches(sample(availableKeys), 16, 2),
     };
   },
   methods: {

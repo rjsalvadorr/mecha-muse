@@ -23,6 +23,7 @@
     "lodash": "^4.17.11",
     "midi-player-js": "^2.0.5",
     "midi-writer-js": "^1.7.0",
+    "random-words": "^1.1.0",
     "soundfont-player": "^0.11.0",
     "tonal": "^2.1.2",
     "tonal-chord": "^2.2.1",

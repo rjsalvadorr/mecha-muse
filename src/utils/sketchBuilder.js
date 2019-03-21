@@ -1,10 +1,10 @@
 import shuffle from 'lodash/shuffle';
 import sample from 'lodash/sample';
 import map from 'lodash/map';
-
 import * as Key from 'tonal-key';
 import * as Chord from 'tonal-chord';
 import * as RomanNumeral from 'tonal-roman-numeral';
+import getRandomWords from 'random-words';
 
 import Note from '../entities/note';
 import MmChord from '../entities/chord';
@@ -37,6 +37,7 @@ class SketchBuilder {
 
     const sketches = [];
     let sketch;
+    let randomWords;
 
     for (let i = 0; i < numSketches; i++) {
       sketch = new Sketch();
@@ -50,8 +51,9 @@ class SketchBuilder {
       sketch.accompaniment = this.buildAccompaniment(key, sketch.chords);
       sketch.bassline = this.buildBassline(key, sketch.chords);
 
-      sketch.id = CalcUtils.getRandomInt(1, 65535);
-      sketch.name = `test-${sketch.id}-${CalcUtils.getRandomInt(1, 65535)}`;
+      sketch.id = CalcUtils.getRandomInt(1, 2147483647);
+      randomWords = getRandomWords(12);
+      sketch.name = `${sample(randomWords)} ${sample(randomWords)}`;
       sketches.push(sketch);
     }
 
